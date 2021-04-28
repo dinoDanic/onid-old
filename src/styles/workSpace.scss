@@ -1,0 +1,12 @@
+.workSpace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.workSpace__addNew {
+  margin-left: -10px;
+  .MuiButtonBase-root {
+    min-width: 20px !important;
+    border-radius: 100%;
+  }
+}

@@ -1,0 +1,22 @@
+@import "theme.scss";
+.ws_icon {
+  position: relative;
+  display: flex;
+  margin-bottom: 10px;
+}
+.ws_icon__letter {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background: $color2;
+  border-radius: 10px;
+  margin-left: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  p {
+    color: white;
+    font-weight: 800;
+  }
+}

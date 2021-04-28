@@ -1,0 +1,23 @@
+.dashboard__header {
+  display: flex;
+  align-items: center;
+}
+.dashboard__letter {
+  margin-right: 7px;
+  margin-left: 0;
+}
+.dashboard__newBoard {
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  .MuiButtonBase-root {
+    width: 100%;
+    text-transform: none;
+  }
+  .MuiButton-label {
+    justify-content: flex-start !important;
+  }
+  .MuiSvgIcon-root {
+    margin-right: 10px;
+  }
+}

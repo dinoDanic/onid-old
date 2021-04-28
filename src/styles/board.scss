@@ -1,0 +1,20 @@
+.board {
+  margin-top: 10px;
+  .MuiSvgIcon-root {
+    margin-right: 10px;
+  }
+
+  .MuiButtonBase-root {
+    width: 100%;
+    text-transform: none !important;
+  }
+  .MuiButton-label {
+    justify-content: flex-start !important;
+  }
+  .MuiButton-root {
+    width: 100%;
+  }
+  p {
+    margin: 0;
+  }
+}
