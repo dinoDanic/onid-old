@@ -1,0 +1,19 @@
+.moduleTypes {
+  display: flex;
+  margin-bottom: 10px;
+}
+.moduleTypes__item {
+  min-width: 100px;
+  max-width: 100px;
+  display: flex;
+  justify-content: center;
+}
+.lmn__deadLine {
+  order: 1;
+}
+.lmn__createdDate {
+  order: 2;
+}
+.lmn__createdBy {
+  order: 3;
+}

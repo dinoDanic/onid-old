@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { loading, login } from "../actions";
 import { useHistory } from "react-router-dom";
 import { db } from "../lib/firebase";
 import "../styles/workSpace.scss";
@@ -9,31 +10,49 @@ import { Button } from "@material-ui/core";
 import CreateWs from "../components/CreateWs";
 
 function WorkSpace() {
-  const userData = useSelector((state) => state.userInfo);
+  const userInfo = useSelector((state) => state.userInfo);
   const history = useHistory();
+  const dispatch = useDispatch();
   const [wsData, setWsData] = useState([]);
   const [createWs, setCreateWs] = useState(false);
+  const [mainWsLink, setMainWsLink] = useState("");
 
-  const checkForWS = () => {
-    if (userData) {
-      db.collection("workStation")
-        .where("users", "array-contains", userData.uid)
-        .onSnapshot((doc) => {
-          if (doc.empty) {
-            console.log("no data, creating work station");
-            setCreateWs(true);
-          }
-          let list = [];
-          doc.forEach((data) => {
-            list.push(data.data());
-          });
-          setWsData(list);
-        });
-    }
-  };
   useEffect(() => {
+    const checkForWS = () => {
+      // Check work space
+      if (userInfo) {
+        db.collection("workStation")
+          .where("users", "array-contains", userInfo.uid)
+          .onSnapshot((doc) => {
+            if (doc.empty) {
+              setCreateWs(true);
+            }
+            let list = [];
+            doc.forEach((data) => {
+              list.push(data.data());
+            });
+            setWsData(list);
+            dispatch(loading(false));
+          });
+
+        // Find main ws
+        db.collection("users")
+          .doc(userInfo.uid)
+          .onSnapshot((docData) => {
+            if (docData.exists) {
+              setMainWsLink(docData.data().mainWs);
+              if (mainWsLink) {
+                if (history.location.pathname === "/") {
+                  history.push(`/ws/${mainWsLink}`);
+                }
+              }
+            }
+          });
+      }
+    };
+
     checkForWS();
-  }, [userData]);
+  }, [userInfo, mainWsLink]);
 
   return (
     <div className="workSpace">
@@ -44,6 +63,7 @@ function WorkSpace() {
               key={Math.random() * 1000}
               name={data.ws_name}
               id={data.wsId}
+              mainWsLink={mainWsLink}
             />
           );
         })}

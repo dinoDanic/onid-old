@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button, TextField } from "@material-ui/core";
 import { db } from "../lib/firebase";
 import "../styles/createBoard.scss";
 
 function CreateBoard({ setNewBoard }) {
-  const currentWsId = useSelector((state) => state.currentWsId);
   const [newBoardName, setNewBoardName] = useState("");
+  const history = useHistory();
+  const currentWsId = history.location.pathname.split("/")[2];
+
+  const [docDataId, setDocDataId] = useState();
 
   const createNewBoard = () => {
     if (currentWsId) {
@@ -15,8 +18,21 @@ function CreateBoard({ setNewBoard }) {
         .collection("dashboard")
         .add({
           name: newBoardName,
+          activeModules: [],
+          moduleTypes: ["Created By", "Created Date", "Deadline", "Assign"],
+          orderModules: {
+            "Created By": "1",
+            "Created Date": "2",
+            Deadline: "3",
+            Assign: "4",
+          },
+          // SET LIST COLORS TODOS
+          colors: {
+            "to do": "#dc00dc",
+          },
         })
         .then((docData) => {
+          console.log(docData.id);
           db.collection("workStation")
             .doc(currentWsId)
             .collection("dashboard")
@@ -27,8 +43,40 @@ function CreateBoard({ setNewBoard }) {
               },
               { merge: true }
             );
+          //SET ALL MODULES
+          const createAllModules = (name, order) => {
+            db.collection("workStation")
+              .doc(currentWsId)
+              .collection("dashboard")
+              .doc(docData.id)
+              .collection("modules")
+              .add({
+                module: name,
+                order: order,
+              })
+              .then((docData2) => {
+                let id = docData2._delegate.id;
+                db.collection("workStation")
+                  .doc(currentWsId)
+                  .collection("dashboard")
+                  .doc(docData.id)
+                  .collection("modules")
+                  .doc(id)
+                  .set(
+                    {
+                      id: id,
+                    },
+                    { merge: true }
+                  );
+              });
+          };
+          createAllModules("Created By", 0);
+          createAllModules("Assign", 1);
+          createAllModules("Created Date", 2);
+          createAllModules("Deadline", 3);
+
+          setNewBoard(false);
         });
-      setNewBoard(false);
     }
   };
 

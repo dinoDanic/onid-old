@@ -1,10 +1,10 @@
-const login = (state = false, action) => {
+const wsData = (state = "", action) => {
   switch (action.type) {
-    case "SET_LOGIN":
+    case "SET_WSDATA":
       return action.payload;
     default:
       return state;
   }
 };
 
-export default login;
+export default wsData;

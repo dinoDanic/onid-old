@@ -1,0 +1,91 @@
+.fn__menu {
+  position: absolute;
+  right: 0px;
+  .MuiButton-root {
+    min-width: 0;
+  }
+}
+.fn__menuWindow {
+  background: white;
+  padding: 10px 10px;
+  width: 150px;
+  position: absolute;
+  top: 40px;
+  border-radius: 10px;
+  background: rgb(245, 245, 245);
+  z-index: 120;
+  .MuiButtonBase-root {
+    width: 100% !important;
+  }
+
+  button {
+    display: flex;
+    justify-content: start;
+    margin-top: 5px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  p {
+    margin-left: 10px;
+  }
+}
+.fn__menuWindow--layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+.fn__listProps {
+  right: 0;
+  top: 40px;
+  button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.boxPop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+.boxPop__layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.boxPop__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  h2 {
+    margin: 0 0 8px 0;
+  }
+}
+.boxPop__box {
+  background: white;
+  width: 400px;
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+.boxPop__buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+  button {
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}

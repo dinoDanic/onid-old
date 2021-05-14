@@ -1,0 +1,158 @@
+@import "theme.scss";
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+}
+.listItem__taskName {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  min-width: 200px;
+}
+.listItem__fn {
+  display: flex;
+  &:first-child {
+    /*  box-shadow: 0 0 17px -4px black !important; */
+  }
+
+  p {
+    font-size: 12px;
+    color: white;
+  }
+}
+.listItem__createdAt {
+  background: #6d8daf;
+  color: white;
+  padding: 5px 0px;
+  display: flex;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  min-width: 70px;
+  /* box-shadow: 0 0 17px -4px black !important; */
+}
+.listItem__createdBy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  .MuiAvatar-root {
+    width: 30px;
+    height: 30px;
+  }
+}
+.listItem__deadLine {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #547598;
+  min-width: 100px;
+  color: white;
+  position: relative;
+  .listItem__showDeadDate {
+    margin-left: -10px;
+  }
+  .MuiInputBase-input {
+    width: 0;
+    border: none;
+  }
+  .MuiIconButton-root {
+    width: 106px;
+    height: 100px;
+    border-radius: 0;
+    margin-top: 20px;
+  }
+  .MuiInput-underline {
+    &:before {
+      border: none;
+      content: none;
+    }
+    &:after {
+      border: none;
+    }
+    &:hover {
+      border: none;
+    }
+  }
+  .MuiFormControl-marginNormal {
+    margin: 0;
+  }
+}
+.listItem__deadPicker {
+  .MuiGrid-root {
+    background: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    height: 100%;
+  }
+}
+.listItem__daysLeft {
+  min-width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  right: 0;
+  position: absolute;
+  height: 50px;
+  p {
+    font-size: 11px;
+  }
+}
+.listItem__fnHolder {
+  display: flex;
+}
+.listItem__comp {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.listItem__assign {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+.listItem__assignAvatar {
+  cursor: pointer;
+  .MuiAvatar-root {
+    width: 30px;
+    height: 30px;
+  }
+}
+.listItem__chooseUser {
+  position: absolute;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  top: 0;
+  background: white;
+  padding: 5px;
+  box-shadow: 0px 0px 61px -27px black;
+  z-index: 100;
+  p {
+    color: black;
+    margin-left: 10px;
+  }
+}
+.listItem__chooseUserInside {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  &:last-child {
+    margin-bottom: 0px;
+  }
+  &:hover {
+    background: #eee;
+  }
+  .MuiAvatar-root {
+    width: 30px;
+    height: 30px;
+  }
+}

@@ -1,4 +1,4 @@
-const userInfoReducer = (state = false, action) => {
+const userInfoReducer = (state = "", action) => {
   switch (action.type) {
     case "SET_USER_INFO":
       return action.payload;

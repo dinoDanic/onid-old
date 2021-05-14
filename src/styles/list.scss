@@ -1,0 +1,89 @@
+@import "theme.scss";
+.list {
+  position: relative;
+  padding: 30px;
+  form {
+    display: flex;
+    align-items: center;
+    input {
+      background: none;
+      border: none;
+      padding: 7px 10px;
+      margin-right: 10px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.list ul li {
+  list-style: none;
+  background: #fafafa;
+  border-radius: 7px;
+  margin-bottom: 3px;
+  /* overflow: hidden; */
+}
+.list ul {
+  margin: 0;
+  padding: 0;
+}
+.list__addFn {
+  position: absolute;
+  right: 30px;
+  top: -120px;
+  .MuiSvgIcon-root {
+    color: white !important;
+  }
+  .MuiButtonBase-root {
+    background: $color2;
+  }
+}
+.list__item {
+  .list__itemDrag {
+    opacity: 0;
+    margin-top: 15px;
+  }
+  &:hover {
+    .list__itemDrag {
+      opacity: 1;
+    }
+  }
+}
+.list__module {
+  display: flex;
+  justify-content: flex-end;
+}
+.list__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list__status {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  margin-left: -25px;
+}
+.list__statusName {
+  padding: 5px 10px;
+  border-radius: 5px;
+  p {
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+  }
+}
+.list__statusCounter {
+  margin-left: 5px;
+  p {
+    color: #333;
+    font-size: 12px;
+  }
+}
+.list__statusArrow {
+  cursor: pointer;
+  height: 25px;
+  .MuiSvgIcon-root {
+  }
+}

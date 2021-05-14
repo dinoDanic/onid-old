@@ -9,36 +9,49 @@ function CreateWs({ setCreateWs }) {
   const [newStation, setNewStation] = useState("");
 
   const handleCreateWS = () => {
-    db.collection("workStation")
-      .add({
-        ws_name: newStation,
-        users: [userData.uid],
-      })
-      .then((docData) => {
-        db.collection("workStation").doc(docData.id).set(
-          {
-            wsId: docData.id,
-          },
-          { merge: true }
-        );
-        /* db.collection("workStation")
-          .doc(docData.id)
-          .collection("dashboard")
-          .add({})
-          .then((dashData) => {
+    if (userData) {
+      db.collection("workStation")
+        .where("users", "array-contains", userData.uid)
+        .get()
+        .then((doc) => {
+          if (doc.empty) {
             db.collection("workStation")
-              .doc(docData.id)
-              .collection("dashboard")
-              .doc(dashData.id)
-              .set(
-                {
-                  dashboardId: dashData.id,
-                },
-                { merge: true }
-              );
-          }); */
-      });
-    setCreateWs(false);
+              .add({
+                ws_name: newStation,
+                users: [userData.uid],
+                alfa: userData.uid,
+              })
+              .then((docData) => {
+                db.collection("workStation").doc(docData.id).set(
+                  {
+                    wsId: docData.id,
+                  },
+                  { merge: true }
+                );
+                db.collection("users").doc(userData.uid).update({
+                  mainWs: docData.id,
+                });
+              });
+          } else {
+            db.collection("workStation")
+              .add({
+                ws_name: newStation,
+                users: [userData.uid],
+                alfa: userData.uid,
+              })
+              .then((docData) => {
+                db.collection("workStation").doc(docData.id).set(
+                  {
+                    wsId: docData.id,
+                  },
+                  { merge: true }
+                );
+              });
+          }
+        });
+
+      setCreateWs(false);
+    }
   };
 
   return (
