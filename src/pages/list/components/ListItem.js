@@ -16,6 +16,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+import { AnimatePresence, motion } from "framer-motion";
 
 function ListItem({
   currentWsId,
@@ -31,8 +32,12 @@ function ListItem({
   order,
   moduleData,
   assignState,
+  statusState,
+  statusTask,
+  dbName,
 }) {
   const wsData = useSelector((state) => state.wsData);
+  const db_Data = useSelector((state) => state.db_Data);
   const [createdByPhtotUrl, setCreatedByPhotoUrl] = useState("");
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [daysLeftColor, setDaysLeftColor] = useState("");
@@ -41,9 +46,14 @@ function ListItem({
   const [createdDateOrder, setCreatedDateOrder] = useState(0);
   const [deadlineOrder, setDeadlineOrder] = useState(0);
   const [assignOrder, setAssignOrder] = useState(0);
+  const [statusOrder, setStatusOrder] = useState(0);
   const [chooseUserState, setChooseUserState] = useState(false);
   const [chooseUsersData, setChooseUsersData] = useState();
   const [assignedUser, setAssignedUser] = useState();
+  const [statusBg, setStatusBg] = useState("gray");
+  const [statusMenuState, setStatusMenuState] = useState(false);
+  const [statusType, setStatusType] = useState("");
+  const [allColors, setAllColors] = useState();
 
   useEffect(() => {
     const setOrder = () => {
@@ -68,10 +78,16 @@ function ListItem({
           return e.module;
         })
         .indexOf("Assign");
+      let so = items
+        .map(function (e) {
+          return e.module;
+        })
+        .indexOf("Status");
       setCreatedByOrder(cbo);
       setCreatedDateOrder(cdo);
       setDeadlineOrder(dlo);
       setAssignOrder(ao);
+      setStatusOrder(so);
     };
     setOrder();
   }, [moduleData]);
@@ -82,7 +98,7 @@ function ListItem({
       .doc(currentWsId)
       .collection("dashboard")
       .doc(boardId)
-      .collection("to do")
+      .collection("task")
       .doc(listId)
       .set(
         {
@@ -164,7 +180,7 @@ function ListItem({
       .doc(currentWsId)
       .collection("dashboard")
       .doc(boardId)
-      .collection("to do")
+      .collection("task")
       .doc(listId)
       .set(
         {
@@ -181,12 +197,11 @@ function ListItem({
       .doc(currentWsId)
       .collection("dashboard")
       .doc(boardId)
-      .collection("to do")
+      .collection("task")
       .doc(listId)
       .get()
       .then((data) => {
         if (data.exists) {
-          console.log(data.data().assignedUser);
           if (data.data().assignedUser != undefined) {
             db.collection("users")
               .doc(data.data().assignedUser)
@@ -197,11 +212,42 @@ function ListItem({
                 }
               });
           } else {
-            console.log("undefined");
+            return;
           }
         }
       });
   }, [boardId, listId, chooseUserState]);
+
+  useEffect(() => {
+    // set color of status and type of status
+    db.collection("workStation")
+      .doc(currentWsId)
+      .collection("dashboard")
+      .doc(boardId)
+      .onSnapshot((docData) => {
+        if (docData.exists) {
+          //set color by current name
+          setStatusBg(docData.data().colors[`${dbName}`]);
+          //get all colors
+          setAllColors(docData.data().colors);
+          //get status type data
+          setStatusType(docData.data().statusType);
+        }
+      });
+  }, []);
+
+  const changeStatus = (name) => {
+    console.log(name);
+    db.collection("workStation")
+      .doc(currentWsId)
+      .collection("dashboard")
+      .doc(boardId)
+      .collection("task")
+      .doc(listId)
+      .update({
+        status: name,
+      });
+  };
 
   return (
     <div className="listItem">
@@ -222,7 +268,7 @@ function ListItem({
           )}
           {createdAt && (
             <div
-              className="listItem__createdAt listItem__comp"
+              className="listItem__createdAt listItem__comp boxShadow"
               name="Created Date"
               style={{ order: createdDateOrder }}
             >
@@ -232,7 +278,7 @@ function ListItem({
           {deadLineState && (
             <>
               <div
-                className="listItem__deadLine listItem__comp"
+                className="listItem__deadLine listItem__comp boxShadow"
                 name="Deadline"
                 style={{ order: deadlineOrder }}
               >
@@ -305,6 +351,49 @@ function ListItem({
                 </>
               )}
             </div>
+          )}
+          {statusState && (
+            <>
+              <div
+                className="listItem__comp listItem__status boxShadow"
+                name="Status"
+                style={{ order: statusOrder, background: statusBg }}
+                onClick={() => setStatusMenuState(!statusMenuState)}
+              >
+                <p>{dbName}</p>
+                <AnimatePresence>
+                  {statusMenuState && (
+                    <>
+                      <div
+                        className="layer"
+                        onClick={() => setStatusMenuState(!statusMenuState)}
+                      ></div>
+                      <motion.div
+                        className="listItem__statusMenu"
+                        exit={{ scale: 0.3, opacity: 0 }}
+                        initial={{ scale: 0.3 }}
+                        animate={{ scale: 1 }}
+                      >
+                        {statusType &&
+                          statusType.map((name) => {
+                            return (
+                              <motion.div
+                                className="listItem__statusItem"
+                                style={{ background: allColors[name] }}
+                                onClick={() => changeStatus(name)}
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.9 }}
+                              >
+                                <p>{name}</p>
+                              </motion.div>
+                            );
+                          })}
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+            </>
           )}
         </div>
       </div>

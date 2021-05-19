@@ -46,3 +46,17 @@ export const wsDataAction = (dataWs) => {
     payload: dataWs,
   };
 };
+
+export const dbData = (data) => {
+  return {
+    type: "SET_DB_DATA",
+    payload: data,
+  };
+};
+
+export const membersWs = (members) => {
+  return {
+    type: "SET_MEMBERS_WS",
+    payload: members,
+  };
+};

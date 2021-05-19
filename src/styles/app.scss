@@ -24,9 +24,13 @@
   background: white;
   padding: 20px;
   border-right: 1px solid #eee;
+  box-shadow: -12px 0 30px -32px black;
 }
 .app__openBoard {
   width: 100%;
+  overflow-y: scroll;
+  height: 100vh;
+  position: relative;
 }
 .app__loading {
   position: fixed;
@@ -52,5 +56,4 @@
 }
 
 .MuiButton-containedPrimary {
-  background: $color2 !important;
 }

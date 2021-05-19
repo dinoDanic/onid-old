@@ -6,6 +6,8 @@ import loadingReducer from "./loading";
 import activeModulesReducer from "./activeModules";
 import settings from "./settings";
 import wsData from "./wsData";
+import dbData from "./dbData";
+import membersWs from "./membersWs";
 
 const allReducers = combineReducers({
   currentWsId,
@@ -15,6 +17,8 @@ const allReducers = combineReducers({
   activeModules: activeModulesReducer,
   settings,
   wsData,
+  dbData,
+  membersWs,
 });
 
 export default allReducers;

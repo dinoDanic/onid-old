@@ -33,12 +33,15 @@
   position: relative;
   align-items: center;
   margin-bottom: 10px;
-  background: #f5f5f5;
   border-radius: 5px;
   padding: 10px;
   width: 300px;
+  background: #f5f5f5;
   &:hover {
     background: #eee;
+  }
+  p {
+    font-weight: 700;
   }
 }
 .openWs__alfa {
@@ -49,7 +52,7 @@
   border-radius: 5px;
   p {
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     color: white;
   }
 }
@@ -131,15 +134,21 @@
   .MuiButtonBase-root {
     width: 100%;
     background: #f3f3f3;
+    border-radius: 10px;
   }
   .MuiButton-label {
     justify-content: start;
   }
   .MuiSvgIcon-root {
-    color: #777 !important;
     margin-top: 7px;
+    color: #666;
   }
   .icon {
     margin-right: 10px;
+  }
+  .name {
+    h3 {
+      color: #333;
+    }
   }
 }

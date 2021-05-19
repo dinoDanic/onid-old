@@ -5,10 +5,9 @@ import "../styles/board.scss";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-function Board({ name, boardId, data }) {
+function Board({ name, boardId }) {
   const history = useHistory();
   const pathWsId = history.location.pathname.split("/")[2];
-
   return (
     <Link to={`/ws/${pathWsId}/dashboard/${boardId}/li`}>
       <div className="board">

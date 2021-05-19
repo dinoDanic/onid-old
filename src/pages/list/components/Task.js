@@ -10,32 +10,31 @@ import { settings } from "../../../actions";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import { Button, Fab } from "@material-ui/core";
-import MenuOpenIcon from "@material-ui/icons/MenuOpen";
+
 import ArrowDropDownCircleRoundedIcon from "@material-ui/icons/ArrowDropDownCircleRounded";
 
 //COMPOPNENTS
-import ListItem from "../components/ListItem";
-import ModuleTypes from "../components/ModuleTypes";
+import ListItem from "./ListItem";
+import ModuleTypes from "./ModuleTypes";
 
 //STYLE
 import "../../../styles/list.scss";
 import "../../../styles/fn.scss";
 
-function ToDo() {
+function ToDo({ dbName }) {
   const userInfo = useSelector((state) => state.userInfo);
   const activeModules = useSelector((state) => state.activeModules);
-  const settingState = useSelector((state) => state.settings);
+  const db_Data = useSelector((state) => state.db_Data);
   const dispatch = useDispatch();
   const history = useHistory();
   const boardId = history.location.pathname.split("/")[4];
   const currentWsId = history.location.pathname.split("/")[2];
   const inputRef = useRef();
   const [inputTask, setInputTask] = useState("");
-  const [listData, setListData] = useState();
   const [listToDo, setListToDo] = useState();
-  const [currentOrderId, setCurrentOrderId] = useState(-1);
   const [createdByState, setCreatedByState] = useState(false);
   const [createdDateState, setCreatedDateState] = useState(false);
+  const [statusState, setStatusState] = useState(false);
   const [deadLineState, setDeadLineState] = useState(false);
   const [assignState, setAssignState] = useState(false);
   const [moduleTypeData, setModuleTypeData] = useState([]);
@@ -47,24 +46,25 @@ function ToDo() {
 
   const createNewToDo = (e) => {
     e.preventDefault();
-    if (currentWsId && boardId) {
+    if (currentWsId && boardId && dbName) {
       if (inputRef.current.value !== "") {
         db.collection("workStation")
           .doc(currentWsId)
           .collection("dashboard")
           .doc(boardId)
-          .collection("to do")
+          .collection("task")
           .add({
             taskName: inputTask,
             created: timestamp,
             userId: userInfo.uid,
+            status: dbName,
           })
           .then((data) => {
             db.collection("workStation")
               .doc(currentWsId)
               .collection("dashboard")
               .doc(boardId)
-              .collection("to do")
+              .collection("task")
               .doc(data.id)
               .set(
                 {
@@ -101,12 +101,13 @@ function ToDo() {
   useEffect(() => {
     // get list ToDo data and counter
     const getListToDo = () => {
-      if (currentWsId && boardId) {
+      if (currentWsId && boardId && dbName) {
         db.collection("workStation")
           .doc(currentWsId)
           .collection("dashboard")
           .doc(boardId)
-          .collection("to do")
+          .collection("task")
+          .where("status", "==", dbName)
           .orderBy("created", "desc")
           .onSnapshot((doc) => {
             // get number of tasks
@@ -136,28 +137,9 @@ function ToDo() {
           setModuleData(list);
         });
     }
-    // check active fn and colors
-    const checkActiveFn = () => {
-      db.collection("workStation")
-        .doc(currentWsId)
-        .collection("dashboard")
-        .doc(boardId)
-        .onSnapshot((data) => {
-          if (data.exists) {
-            dispatch(activeModulesAction(data.data().activeModules));
-            // set module type data
-            setModuleTypeData(data.data().moduleTypes);
-            // set module type order
-            setOrderModules(data.data().orderModules);
-            // set color for task
-            setTaskColor(data.data().colors["to do"]);
-          }
-        });
-    };
 
-    checkActiveFn();
     getListToDo();
-  }, [currentWsId, boardId]);
+  }, [dbName]);
 
   useEffect(() => {
     db.collection("workStation")
@@ -171,6 +153,29 @@ function ToDo() {
         }
       });
   }, []);
+
+  useEffect(() => {
+    // check active fn and colors
+    if (dbName) {
+      db.collection("workStation")
+        .doc(currentWsId)
+        .collection("dashboard")
+        .doc(boardId)
+        .onSnapshot((data) => {
+          if (data.exists) {
+            dispatch(activeModulesAction(data.data().activeModules));
+            // set module type data
+            setModuleTypeData(data.data().moduleTypes);
+            // set module type order
+            setOrderModules(data.data().orderModules);
+            // set color for task
+            setTaskColor(data.data().colors[dbName]);
+          } else {
+            console.log("cant find");
+          }
+        });
+    }
+  }, [dbName]);
 
   useEffect(() => {
     if (activeModules) {
@@ -193,6 +198,11 @@ function ToDo() {
         setAssignState(true);
       } else {
         setAssignState(false);
+      }
+      if (activeModules.includes("Status")) {
+        setStatusState(true);
+      } else {
+        setStatusState(false);
       }
     }
   }, [activeModules]);
@@ -283,7 +293,7 @@ function ToDo() {
             />
           </div>
           <div className="list__statusName" style={{ background: taskColor }}>
-            <p>to do</p>
+            <p>{dbName}</p>
           </div>
           <div className="list__statusCounter">
             <p>{counterTask} tasks</p>
@@ -375,6 +385,9 @@ function ToDo() {
                                 order={orderModules}
                                 moduleData={moduleData}
                                 assignState={assignState}
+                                statusState={statusState}
+                                statusTask={data.status}
+                                dbName={dbName}
                               />
                             </li>
                           )}
@@ -387,7 +400,7 @@ function ToDo() {
             </Droppable>
           </DragDropContext>
 
-          <ul className="list__ul">
+          <ul className="list__newTask">
             <li>
               <form onSubmit={(e) => createNewToDo(e)}>
                 <input
@@ -404,15 +417,6 @@ function ToDo() {
           </ul>
         </>
       )}
-      {/* SETTINGS MENU BTN */}
-      <div
-        className="list__addFn"
-        onClick={() => dispatch(settings(!settingState))}
-      >
-        <Fab color="primary" aria-label="add" size="small">
-          <MenuOpenIcon />
-        </Fab>
-      </div>
     </>
   );
 }

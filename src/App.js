@@ -14,7 +14,8 @@ import Dashboard from "./pages/Dashboard";
 import OpenWs from "./pages/OpenWs";
 import List from "./pages/list/List";
 import User from "./components/User";
-import ListSettings from "./pages/list/components/ListSettings";
+import ListModulesMenu from "./pages/list/components/ListModulesMenu";
+import BoardList from "./pages/board_list/BoardList";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,10 +49,11 @@ function App() {
               <Route path="/ws/:id/dashboard/:id" component={OpenBoard} />
               <Route exact path="/ws/:id" component={OpenWs} />
               <Route path="/ws/:id/dashboard/:id/li" component={List} />
+              <Route path="/ws/:id/dashboard/:id/bo" component={BoardList} />
             </div>
             {settingState && (
               <div className="app__settings">
-                <ListSettings />
+                <ListModulesMenu />
               </div>
             )}
           </>

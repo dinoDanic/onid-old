@@ -64,6 +64,7 @@ function WorkSpace() {
               name={data.ws_name}
               id={data.wsId}
               mainWsLink={mainWsLink}
+              color={data.color}
             />
           );
         })}

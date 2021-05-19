@@ -3,10 +3,13 @@ import { Button, TextField } from "@material-ui/core";
 import { db } from "../lib/firebase";
 import { useSelector } from "react-redux";
 import "../styles/createWs.scss";
+import ColorPicker from "../components/ColorPicker";
+import Ws_selectColor from "./Ws_selectColor";
 
 function CreateWs({ setCreateWs }) {
   const userData = useSelector((state) => state.userInfo);
   const [newStation, setNewStation] = useState("");
+  const [color, setColor] = useState("#333");
 
   const handleCreateWS = () => {
     if (userData) {
@@ -20,6 +23,7 @@ function CreateWs({ setCreateWs }) {
                 ws_name: newStation,
                 users: [userData.uid],
                 alfa: userData.uid,
+                color: color,
               })
               .then((docData) => {
                 db.collection("workStation").doc(docData.id).set(
@@ -38,6 +42,7 @@ function CreateWs({ setCreateWs }) {
                 ws_name: newStation,
                 users: [userData.uid],
                 alfa: userData.uid,
+                color: color,
               })
               .then((docData) => {
                 db.collection("workStation").doc(docData.id).set(
@@ -59,23 +64,29 @@ function CreateWs({ setCreateWs }) {
       <div className="createWS__layer" onClick={() => setCreateWs(false)}></div>
       <div className="createWS__box">
         <div className="createWS__header">
-          <h2>Create Work Station</h2>
+          <h2 style={{ color: color }}>Create Work Station</h2>
         </div>
         <div className="createWS__info">
-          <p>In Work Station you hold all your future Dashboards</p>
+          <p style={{ color: color }}>
+            In Work Station you hold all your future Dashboards
+          </p>
         </div>
         <form onSubmit={(e) => e.preventDefault()}>
           <TextField
             id="outlined-basic"
-            label="Main Station"
+            label="New Work Station"
             variant="outlined"
             onChange={(e) => setNewStation(e.target.value)}
+            style={{
+              color: color,
+            }}
           />
+          <Ws_selectColor setColor={setColor} />
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             onClick={() => handleCreateWS()}
+            style={{ background: color, color: "white" }}
           >
             Create
           </Button>

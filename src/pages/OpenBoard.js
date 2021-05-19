@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { db } from "../lib/firebase";
 import "../styles/openBoard.scss";
 import { Button } from "@material-ui/core";
 
 function OpenBoard() {
   const history = useHistory();
+  const wsDataColor = useSelector((state) => state.wsData.color);
   const boardId = history.location.pathname.split("/")[4];
   const currentWsId = history.location.pathname.split("/")[2];
   const [openBoardData, setOpenBoardData] = useState([]);
@@ -45,7 +47,12 @@ function OpenBoard() {
       <h1>{openBoardData?.name}</h1>
       <div className="openBoard__modes">
         <Link to={`/ws/${currentWsId}/dashboard/${boardId}/li`}>
-          <Button size="small" color="primary" variant="contained">
+          <Button
+            size="small"
+            color="primary"
+            variant="contained"
+            style={{ background: wsDataColor }}
+          >
             List
           </Button>
         </Link>

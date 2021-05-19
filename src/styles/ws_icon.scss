@@ -3,20 +3,22 @@
   position: relative;
   display: flex;
   margin-bottom: 10px;
+  z-index: 200;
 }
 .ws_icon__letter {
   cursor: pointer;
-  width: 40px;
-  height: 40px;
-  background: $color2;
+  width: 36px;
+  height: 36px;
+  /* background: $color2; */
   border-radius: 10px;
   margin-left: -10px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   p {
-    color: white;
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 800;
     font-size: 1rem;
   }
@@ -47,6 +49,6 @@
     pointer-events: none;
     width: max-content;
     font-size: 10px;
-    z-index: 100;
+    z-index: 200;
   }
 }

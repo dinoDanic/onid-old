@@ -1,3 +1,4 @@
+@import "theme.scss";
 .board {
   margin-top: 10px;
   .MuiSvgIcon-root {
@@ -7,6 +8,7 @@
   .MuiButtonBase-root {
     width: 100%;
     text-transform: none !important;
+    color: $alphaBlack;
   }
   .MuiButton-label {
     justify-content: flex-start !important;

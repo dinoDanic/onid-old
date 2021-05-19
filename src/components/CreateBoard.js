@@ -19,16 +19,26 @@ function CreateBoard({ setNewBoard }) {
         .add({
           name: newBoardName,
           activeModules: [],
-          moduleTypes: ["Created By", "Created Date", "Deadline", "Assign"],
+          moduleTypes: [
+            "Created By",
+            "Created Date",
+            "Deadline",
+            "Assign",
+            "Status",
+          ],
           orderModules: {
             "Created By": "1",
             "Created Date": "2",
             Deadline: "3",
             Assign: "4",
+            Status: "5",
           },
+          statusType: ["to do", "stuck", "done"],
           // SET LIST COLORS TODOS
           colors: {
             "to do": "#dc00dc",
+            done: "#0bdc00",
+            stuck: "#e6563c",
           },
         })
         .then((docData) => {
@@ -72,8 +82,9 @@ function CreateBoard({ setNewBoard }) {
           };
           createAllModules("Created By", 0);
           createAllModules("Assign", 1);
-          createAllModules("Created Date", 2);
-          createAllModules("Deadline", 3);
+          createAllModules("Status", 2);
+          createAllModules("Created Date", 3);
+          createAllModules("Deadline", 4);
 
           setNewBoard(false);
         });

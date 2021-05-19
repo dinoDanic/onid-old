@@ -1,27 +1,32 @@
+@import "theme.scss";
 .fn__menu {
   position: absolute;
-  right: 0px;
+  right: -18px;
   .MuiButton-root {
     min-width: 0;
   }
 }
 .fn__menuWindow {
   background: white;
-  padding: 10px 10px;
-  width: 150px;
+  padding: 5px;
+  width: 180px;
   position: absolute;
   top: 40px;
   border-radius: 10px;
-  background: rgb(245, 245, 245);
+  border: 1px solid #eee;
   z-index: 120;
+  box-shadow: 0 0 28px -15px black;
   .MuiButtonBase-root {
     width: 100% !important;
+    color: $alphaBlack !important;
+    border-radius: 5px;
   }
 
   button {
     display: flex;
     justify-content: start;
     margin-top: 5px;
+    color: $alphaBlack;
     &:first-child {
       margin-top: 0;
     }
@@ -47,7 +52,27 @@
     justify-content: space-between;
   }
 }
-
+.fn__menuWindows--arrow {
+  position: absolute;
+  right: 5px;
+}
+.fn__menuWindow--colorPop {
+  background: white;
+  left: 100%;
+  margin-left: 5px;
+  padding: 5px;
+  width: 180px;
+  position: absolute;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  box-shadow: 0 0 28px -15px black;
+  margin-top: -36px;
+  p {
+    text-align: center;
+    margin: 5px 0;
+    color: #555;
+  }
+}
 .boxPop {
   position: fixed;
   top: 0;

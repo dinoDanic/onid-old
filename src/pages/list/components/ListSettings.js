@@ -1,145 +1,88 @@
-import React, { useState, useEffect } from "react";
-import { db, fieldValue } from "../../../lib/firebase";
+import React, { useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import { Button, Switch } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { db, fieldValue } from "../../../lib/firebase";
+
+// COMPONENTS
+import ColorPicker from "../../../components/ColorPicker";
+import StatusTypes from "./StatusTypes";
+
+//STYLE and MATERIAL UI
+import { Button, Input, Paper } from "@material-ui/core";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import "../../../styles/listSettings.scss";
+import "../../../styles/theme.scss";
 
-function ListSettings() {
-  const activeModules = useSelector((state) => state.activeModules);
-  const history = useHistory();
-  const boardId = history.location.pathname.split("/")[4];
-  const currentWsId = history.location.pathname.split("/")[2];
-  const [createdByState, setCreatedByState] = useState(false);
-  const [createdDateState, setCreatedDateState] = useState(false);
-  const [deadLineState, setDeadLineState] = useState(false);
-  const [assignState, setAssignState] = useState(false);
+function ListSettings({ setListSettingsStatus, currentWsId, boardId }) {
+  const db_Data = useSelector((state) => state.dbData);
+  const [addNewState, setAddNewState] = useState(false);
+  const [nameNewStatus, setNameNewStatus] = useState("");
+  const inputRef = useRef();
+  const handleNewStatus = (e) => {
+    e.preventDefault();
 
-  // check status of moddels and set it
-  useEffect(() => {
-    if (activeModules) {
-      if (activeModules.includes("Created By")) {
-        setCreatedByState(true);
-      } else {
-        setCreatedByState(false);
-      }
-      if (activeModules.includes("Created Date")) {
-        setCreatedDateState(true);
-      } else {
-        setCreatedDateState(false);
-      }
-      if (activeModules.includes("Deadline")) {
-        setDeadLineState(true);
-      } else {
-        setDeadLineState(false);
-      }
-      if (activeModules.includes("Assign")) {
-        setAssignState(true);
-      } else {
-        setAssignState(false);
-      }
-    }
-  }, [activeModules]);
+    let colors = db_Data.colors;
+    colors = { ...colors, nameNewStatus2: "blue" };
+    colors[nameNewStatus] = colors["nameNewStatus2"];
+    delete colors["nameNewStatus2"];
 
-  const handleFn = (prop1, set, state) => {
     db.collection("workStation")
       .doc(currentWsId)
       .collection("dashboard")
       .doc(boardId)
-      .get()
-      .then((docData) => {
-        console.log(docData.data());
-        if (activeModules) {
-          if (docData.data().activeModules.includes(prop1)) {
-            console.log("it dose");
-            db.collection("workStation")
-              .doc(currentWsId)
-              .collection("dashboard")
-              .doc(boardId)
-              .update({
-                activeModules: fieldValue.arrayRemove(prop1),
-              });
-            set(!state);
-          } else {
-            db.collection("workStation")
-              .doc(currentWsId)
-              .collection("dashboard")
-              .doc(boardId)
-              .update({
-                activeModules: fieldValue.arrayUnion(prop1),
-              });
-            set(!state);
-          }
-        }
+      .update({
+        statusType: fieldValue.arrayUnion(nameNewStatus),
+        colors,
       });
+
+    setAddNewState(false);
   };
+
   return (
-    <div className="lS">
-      <h4>Active modules</h4>
-      <Button>
-        <div
-          className="lS__createdBy lS__option"
-          onClick={() =>
-            handleFn("Created By", setCreatedByState, createdByState)
-          }
-        >
-          <p>Created By</p>
-          <Switch
-            size="small"
-            checked={createdByState}
-            color="primary"
-            name="checkedB"
-            inputProps={{ "aria-label": "primary checkbox" }}
-          />
-        </div>
-      </Button>
-      <Button>
-        <div
-          className="lS__createdDate lS__option"
-          onClick={() =>
-            handleFn("Created Date", setCreatedDateState, createdDateState)
-          }
-        >
-          <p>Created Date</p>
-          <Switch
-            size="small"
-            checked={createdDateState}
-            color="primary"
-            name="checkedB"
-            inputProps={{ "aria-label": "primary checkbox" }}
-          />
-        </div>
-      </Button>
-      <Button>
-        <div
-          className="lS__deadLine lS__option"
-          onClick={() => handleFn("Deadline", setDeadLineState, deadLineState)}
-        >
-          <p>Deadline</p>
-          <Switch
-            size="small"
-            checked={deadLineState}
-            color="primary"
-            name="checkedB"
-            inputProps={{ "aria-label": "primary checkbox" }}
-          />
-        </div>
-      </Button>
-      <Button>
-        <div
-          className="lS__assign lS__option"
-          onClick={() => handleFn("Assign", setAssignState, assignState)}
-        >
-          <p>Assign</p>
-          <Switch
-            size="small"
-            checked={assignState}
-            color="primary"
-            name="checkedB"
-            inputProps={{ "aria-label": "primary checkbox" }}
-          />
-        </div>
-      </Button>
+    <div className="listSettings">
+      <div className="layer" onClick={() => setListSettingsStatus(false)}></div>
+      <div className="listSettings__menu">
+        <Paper elevation={3}>
+          <div className="listSettings__menu-title">
+            <h2>List Settings</h2>
+          </div>
+          <div className="listSettings__editStatusTitle">
+            <h4>Edit Status</h4>
+            <p>Change color, Rename and Add New</p>
+          </div>
+          <div className="listSettings__editStatus">
+            <div className="listSettings__statusWrap">
+              {db_Data.statusType?.map((data) => {
+                return (
+                  <StatusTypes
+                    data={data}
+                    db_Data={db_Data}
+                    currentWsId={currentWsId}
+                    boardId={boardId}
+                  />
+                );
+              })}
+              <div className="listSettings__addNewTask">
+                {addNewState && (
+                  <div className="listSettings__settingNew">
+                    <form onSubmit={(e) => handleNewStatus(e)}>
+                      <Input
+                        ref={inputRef}
+                        onChange={(e) => setNameNewStatus(e.target.value)}
+                      />
+                    </form>
+                  </div>
+                )}
+                {!addNewState && (
+                  <Button onClick={() => setAddNewState(true)}>
+                    <AddOutlinedIcon fontSize="small" />
+                    Add new
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        </Paper>
+      </div>
     </div>
   );
 }

@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { db, fieldValue } from "../lib/firebase";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { membersWs } from "../actions/";
 import { Link, useHistory } from "react-router-dom";
 import bg2 from "../img/bg2.jpeg";
 import "../styles/openWs.scss";
 import { Avatar, Button, Input, Paper, Tab, Tabs } from "@material-ui/core";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import { motion } from "framer-motion";
 
 function OpenWs() {
   const wsData = useSelector((state) => state.wsData);
   const history = useHistory();
   const pathWsId = history.location.pathname.split("/")[2];
+  const dispatch = useDispatch();
   const [value, setValue] = useState(0);
   const [members, setMembers] = useState();
-  const [membersId, setMembersId] = useState([]);
   const [board, setBoard] = useState();
   const [addMemberStatus, setAddMemberStatus] = useState(false);
   const [addMemberError, setAddMemberError] = useState("");
@@ -50,6 +52,7 @@ function OpenWs() {
           });
       });
       setMembers(list);
+      dispatch(membersWs(list));
     };
     getMembersId();
   }, [pathWsId]);
@@ -135,8 +138,11 @@ function OpenWs() {
                           <p>{data.userName}</p>
                         </div>
                         {data.userId === wsData.alfa && (
-                          <div className="openWs__alfa">
-                            <p>Alfa</p>
+                          <div
+                            className="openWs__alfa"
+                            style={{ background: wsData.color }}
+                          >
+                            <p>Creator</p>
                           </div>
                         )}
                       </div>
@@ -184,20 +190,29 @@ function OpenWs() {
           {board &&
             board.map((data) => {
               return (
-                <div className="openWs__boards">
+                <motion.div
+                  className="openWs__boards"
+                  whileHover={{ scale: 1.05 }}
+                >
                   <Link to={`/ws/${pathWsId}/dashboard/${data.id}/li`}>
                     <Button>
                       <div className="icon">
-                        <AssignmentIcon fontSize="large" />
+                        <AssignmentIcon
+
+                        /* style={{ color: wsData.color }} */
+                        />
                       </div>
                       <div className="name">
-                        <h3>{data.name}</h3>
+                        <h3 /* style={{ color: wsData.color }} */>
+                          {data.name}
+                        </h3>
                       </div>
                     </Button>
                   </Link>
-                </div>
+                </motion.div>
               );
             })}
+          {board && <>{!board.length && <p>You have no Boards! </p>}</>}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <h3>Notifications</h3>
