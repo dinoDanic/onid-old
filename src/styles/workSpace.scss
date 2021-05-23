@@ -1,4 +1,3 @@
-@import "theme.scss";
 .workSpace {
   display: flex;
   flex-direction: column;
@@ -9,6 +8,5 @@
   .MuiButtonBase-root {
     min-width: 20px !important;
     border-radius: 100%;
-    color: $alpha50;
   }
 }
