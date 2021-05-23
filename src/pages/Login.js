@@ -1,8 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { provider, auth } from "../lib/firebase";
 import { userInfo, login } from "../actions";
 import { useHistory } from "react-router-dom";
+import { db } from "../lib/firebase";
 
 function Login() {
   const dispatch = useDispatch();
@@ -11,15 +12,43 @@ function Login() {
     auth
       .signInWithPopup(provider)
       .then((result) => {
+        var userData = result.user;
+
+        db.collection("users")
+          .doc(userData.uid)
+          .get()
+          .then((docData) => {
+            if (docData.exists) {
+              db.collection("users").doc(userData.uid).update({
+                userId: userData.uid,
+                userName: userData.displayName,
+                userPhoto: userData.photoURL,
+                email: userData.email,
+              });
+            } else {
+              console.log("user dose not exists");
+              db.collection("users").doc(userData.uid).set({
+                mainWs: null,
+                userId: userData.uid,
+                userName: userData.displayName,
+                userPhoto: userData.photoURL,
+                email: userData.email,
+              });
+            }
+          });
+        /* db.collection("users").doc(userData.uid).set({
+          userId: userData.uid,
+          userName: userData.displayName,
+        }); */
+
         /** @type {firebase.auth.OAuthCredential} */
         /* var credential = result.credential; */
 
         // This gives you a Google Access Token. You can use it to access the Google API.
         /* var token = credential.accessToken; */
         // The signed-in user info.
-        var userData = result.user;
         dispatch(userInfo(userData));
-        dispatch(login());
+        dispatch(login(true));
         localStorage.setItem("user", JSON.stringify(userData));
         history.push("/");
       })

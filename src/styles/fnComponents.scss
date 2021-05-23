@@ -1,0 +1,28 @@
+.dashboard__alertHolder {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+}
+.dashboard__alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .MuiAlert-root {
+    border-radius: 10px;
+    width: 300px;
+  }
+  .dashboard__buttons {
+    button {
+      margin: 20px 0px 0 0;
+      &:first-child {
+        margin-right: 5px;
+      }
+    }
+  }
+  .MuiSvgIcon-root {
+    color: #f74a61 !important;
+  }
+}

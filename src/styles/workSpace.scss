@@ -1,12 +1,17 @@
+@import "theme.scss";
 .workSpace {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .workSpace__addNew {
-  margin-left: -10px;
-  .MuiButtonBase-root {
-    min-width: 20px !important;
-    border-radius: 100%;
-  }
+}
+.workSpace__line {
+  width: 10px;
+  height: 10px;
+
+  border: 1px solid black;
+
+  background: #6ca3b1;
+  margin-bottom: 10px;
 }

@@ -1,0 +1,24 @@
+.lM {
+  width: 200px;
+  margin-top: 74px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  .MuiButton-label {
+    display: inline !important;
+    border-bottom: 1px solid #eee;
+  }
+  .MuiButton-text {
+    padding: 0;
+  }
+  h4 {
+    text-align: center;
+  }
+}
+.lM__option {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}

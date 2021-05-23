@@ -1,0 +1,137 @@
+@import "theme.scss";
+.fn__menu {
+  position: absolute;
+  right: 0px;
+  width: 14px;
+  top: 2px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s ease all;
+  &:hover {
+    background: #35545d;
+    .MuiSvgIcon-root {
+      color: white;
+    }
+  }
+  .MuiSvgIcon-root {
+    color: #35545d;
+    transition: 0.2s ease all;
+  }
+}
+.fn__menuWindow {
+  background: white;
+  padding: 15px;
+  width: 170px;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  border: 1px solid black;
+  z-index: 120;
+  box-shadow: 2px 2px 0 1px black;
+
+  .MuiButtonBase-root {
+    width: 100% !important;
+    color: $alphaBlack !important;
+    border-radius: 5px;
+  }
+
+  button {
+    display: flex;
+    justify-content: start;
+    margin-top: 5px;
+    color: $alphaBlack;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  p {
+    margin-left: 10px;
+  }
+}
+.fn__menuWindow--layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+.fn__listProps {
+  right: 0;
+  top: 40px;
+  button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+.fn__menuWindows--arrow {
+  position: absolute;
+  right: 5px;
+}
+.fn__menuWindow--colorPop {
+  background: white;
+  left: 100%;
+  margin-left: 9px;
+  width: 180px;
+  height: 140px;
+  position: absolute;
+  box-shadow: 2px 2px 0 3px black;
+  margin-top: -95px;
+  p {
+    text-align: center;
+    margin: 14px 0 7px 0;
+    font-family: "Press Start 2P", cursive;
+    font-size: 8px;
+  }
+}
+.boxPop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+.boxPop__layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.boxPop__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  h2 {
+    margin: 0 0 8px 0;
+  }
+}
+.boxPop__box {
+  background: white;
+  width: 400px;
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+.boxPop__buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+  button {
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}
+.fn__menuWindow {
+  .fn__menuWindows-brutalBtn {
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

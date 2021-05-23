@@ -1,0 +1,23 @@
+.openBoard {
+  padding: 20px 30px;
+}
+.openBoard__modes {
+  margin: 12px 0;
+  justify-content: space-between;
+  display: flex;
+  button {
+    margin-right: 10px;
+  }
+}
+.openBoard__lineSep {
+  width: 1px;
+  height: 31px;
+  border-right: 1px solid #333;
+  margin: 0 10px;
+}
+.openBoard__L {
+  display: flex;
+}
+.openBoard__R {
+  display: flex;
+}
