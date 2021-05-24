@@ -26,6 +26,9 @@
   p {
   }
 }
+.openWs__menu .MuiTab-root {
+  background: white;
+}
 .openWs__menu {
   padding: 0 80px;
   .MuiAppBar-positionFixed {
@@ -46,7 +49,9 @@
   }
   .MuiPaper-root {
     /*   border-bottom: 1px solid #eee; */
+    background: none;
   }
+
   .PrivateTabIndicator-root-1 {
     display: none;
   }
@@ -155,6 +160,9 @@
     font-weight: 500;
     text-align: left;
   }
+}
+.openWs__baordHolder {
+  display: flex;
 }
 .openWs__boards {
   width: 300px;

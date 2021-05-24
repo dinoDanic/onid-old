@@ -4,6 +4,7 @@ import { provider, auth } from "../lib/firebase";
 import { userInfo, login } from "../actions";
 import { useHistory } from "react-router-dom";
 import { db } from "../lib/firebase";
+import BrutalBtn from "../components/brutal/BrutalBtn";
 
 function Login() {
   const dispatch = useDispatch();
@@ -13,7 +14,6 @@ function Login() {
       .signInWithPopup(provider)
       .then((result) => {
         var userData = result.user;
-
         db.collection("users")
           .doc(userData.uid)
           .get()
@@ -26,7 +26,6 @@ function Login() {
                 email: userData.email,
               });
             } else {
-              console.log("user dose not exists");
               db.collection("users").doc(userData.uid).set({
                 mainWs: null,
                 userId: userData.uid,
@@ -65,8 +64,20 @@ function Login() {
   };
 
   return (
-    <div>
-      <button onClick={handleLogin}>Login with google</button>
+    <div className="login">
+      <div className="brutalPop" style={{ flexDirection: "column" }}>
+        <h3 style={{ textAlign: "center" }}>
+          onid <p>v.0.1.3</p>
+        </h3>
+        <div className="brutalPop__box">
+          <div onClick={handleLogin}>
+            <BrutalBtn tekst="Login / Sign up with google" />
+          </div>
+        </div>
+        <br />
+        <p>last update</p>
+        <p>24.05.21</p>
+      </div>
     </div>
   );
 }

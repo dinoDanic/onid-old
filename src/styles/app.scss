@@ -11,7 +11,17 @@
   background: $color1;
   padding-top: 20px;
   justify-content: space-between;
+  /*   background-image: url("../img/45-degree-fabric-light.png");
+  background-image: url(../img/binding-light.png);
+  background-image: url(../img/45-degree-fabric-light.png);
+  background-image: url(../img/binding-light.png);
+  background-image: url(../img/az-subtle.png); */
+  background-image: url(../img/45-degree-fabric-dark.png);
+  /*   background-image: url(../img/shattered-dark.png); */
+  /*   background-image: url(../img/swirl.png); */
+  /*  background-image: url(../img/blu-stripes.png); */
 }
+
 .app__user {
   margin-bottom: 10px;
 }
@@ -19,17 +29,17 @@
   width: 200px;
   min-width: 200px;
   background: #6ca3b1;
-  /* background: white; */
   padding: 20px;
-  border-right: 1px solid #eee;
-  /* border-right: 3px solid black;
-  border-left: 3px solid black; */
-  /* border-right: 2px solid black; */
+  background-image: url("../img/45-degree-fabric-light.png");
+  /*   box-shadow: -12px 0 23px -18px; */
 }
 .app__openBoard {
   width: 100%;
   overflow-y: scroll;
   height: 100vh;
+
+  /*   background-image: url("../img/bedge-grunge.png"); */
+  /*   background-image: url("../img/blu-stripes.png"); */
   /* position: relative; */
 }
 .app__loading {
@@ -48,7 +58,7 @@
   width: 50px;
   height: 50px;
   background: $color1;
-  border-radius: 10px;
+  border: 2px solid black;
 }
 .app__settings {
   border-left: 1px solid #eee;

@@ -35,6 +35,7 @@ function ToDo({ dbName }) {
   const [createdDateState, setCreatedDateState] = useState(false);
   const [statusState, setStatusState] = useState(false);
   const [deadLineState, setDeadLineState] = useState(false);
+  const [priorityState, setPriorityState] = useState(false);
   const [assignState, setAssignState] = useState(false);
   const [moduleTypeData, setModuleTypeData] = useState([]);
   const [orderModules, setOrderModules] = useState();
@@ -77,28 +78,9 @@ function ToDo({ dbName }) {
     }
   };
 
-  /*   useEffect(() => {
-    // get last order
-    db.collection("workStation")
-      .doc(currentWsId)
-      .collection("dashboard")
-      .doc(boardId)
-      .collection("list")
-      .orderBy("orderId", "desc")
-      .limit(1)
-      .get()
-      .then((doc) => {
-        if (doc.empty) {
-          setCurrentOrderId(-1);
-        }
-        doc.forEach((docData) => {
-          setCurrentOrderId(docData.data().orderId);
-        });
-      });
-  }, [listData, setListData]); */
-
   useEffect(() => {
     // get list ToDo data and counter
+    console.log("getting to do");
     const getListToDo = () => {
       if (currentWsId && boardId && dbName) {
         db.collection("workStation")
@@ -138,7 +120,7 @@ function ToDo({ dbName }) {
     }
 
     getListToDo();
-  }, [dbName]);
+  }, [dbName, boardId]);
 
   useEffect(() => {
     db.collection("workStation")
@@ -203,16 +185,21 @@ function ToDo({ dbName }) {
       } else {
         setStatusState(false);
       }
+      if (activeModules.includes("Priority")) {
+        setPriorityState(true);
+      } else {
+        setPriorityState(false);
+      }
     }
   }, [activeModules]);
 
   function handleDragEnd(result) {
-    /* const items = Array.from(listToDo);
-    console.log(result, items);
+    const items = Array.from(listToDo);
     const [reorderItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderItem);
-    setListToDo(listToDo); */
+    setListToDo(items);
   }
+
   function handleDragEndModules(result) {
     const items = Array.from(moduleData);
     const [reorderItem] = items.splice(result.source.index, 1);
@@ -239,6 +226,11 @@ function ToDo({ dbName }) {
         return e.module;
       })
       .indexOf("Assign");
+    let po = items
+      .map(function (e) {
+        return e.module;
+      })
+      .indexOf("Priority");
 
     const update = (name, order) => {
       db.collection("workStation")
@@ -268,6 +260,7 @@ function ToDo({ dbName }) {
     update("Deadline", dlo);
     update("Created Date", cdo);
     update("Assign", ao);
+    update("Priority", po);
   }
   const getItemStyle = (isDragging, draggableStyle) => ({
     boxShadow: isDragging ? "0 0 8px -4px black" : "",
@@ -380,6 +373,7 @@ function ToDo({ dbName }) {
                                 timestamp={data.created}
                                 deadLine={data.deadLine}
                                 deadLineState={deadLineState}
+                                priorityState={priorityState}
                                 listId={data.listId}
                                 order={orderModules}
                                 moduleData={moduleData}
@@ -404,13 +398,11 @@ function ToDo({ dbName }) {
               <form onSubmit={(e) => createNewToDo(e)}>
                 <input
                   type="text"
-                  placeholder="new task"
+                  placeholder="new quick task"
                   onChange={(e) => setInputTask(e.target.value)}
                   ref={inputRef}
                 />
-                <Button type="submit" size="small">
-                  <AddBoxIcon />
-                </Button>
+                <AddBoxIcon />
               </form>
             </li>
           </ul>

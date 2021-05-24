@@ -2,6 +2,10 @@ import React from "react";
 import "./Brutal.scss";
 import SettingsIcon from "@material-ui/icons/Settings";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import PriorityHighIcon from "@material-ui/icons/PriorityHigh";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 
 function BrutalBtn({
   color,
@@ -33,8 +37,12 @@ function BrutalBtn({
         }}
       >
         <div className="brutalBtn__icon">
-          {icon == "SettingsIcon" && <SettingsIcon />}
-          {icon == "MenuOpenIcon" && <MenuOpenIcon />}
+          {icon === "SettingsIcon" && <SettingsIcon />}
+          {icon === "MenuOpenIcon" && <MenuOpenIcon />}
+          {icon === "ScheduleIcon" && <ScheduleIcon />}
+          {icon === "PriorityHighIcon" && <PriorityHighIcon />}
+          {icon === "CalendarTodayIcon" && <CalendarTodayIcon />}
+          {icon === "EventAvailableIcon" && <EventAvailableIcon />}
         </div>
         <p style={{ fontSize: fontSize }}>{tekst}</p>
       </div>

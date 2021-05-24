@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import { Route, useHistory, withRouter } from "react-router-dom";
 import { userInfo, login } from "./actions";
+import ProtectedRoute from "./ProtectedRoute";
 import "./styles/app.scss";
 import "./styles/fn.scss";
 //PAGES
@@ -21,6 +22,8 @@ function App() {
   const dispatch = useDispatch();
   const loadingState = useSelector((state) => state.loading);
   const settingState = useSelector((state) => state.settings);
+  const loginState = useSelector((state) => state.login);
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
     if (userData) {
@@ -30,26 +33,52 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      <Router>
-        <div className="app__workSpace">
-          <div className="app__workSpaceData">
-            <WorkSpace />
-          </div>
-          <div className="app__user">
-            <User />
-          </div>
-        </div>
-        <div className="app__board">
-          <Route path="/ws/:id" component={Dashboard} />
-        </div>
+    <>
+      <div className="app">
+        {loginState && (
+          <>
+            <div className="app__workSpace">
+              <div className="app__workSpaceData">
+                <WorkSpace />
+              </div>
+              <div className="app__user">
+                <User />
+              </div>
+            </div>
+            <div className="app__board">
+              <ProtectedRoute
+                path="/ws/:id"
+                component={Dashboard}
+                isAuth={loginState}
+              />
+            </div>
+          </>
+        )}
+
         {!loadingState && (
           <>
             <div className="app__openBoard">
-              <Route path="/ws/:id/dashboard/:id" component={OpenBoard} />
-              <Route exact path="/ws/:id" component={OpenWs} />
-              <Route path="/ws/:id/dashboard/:id/li" component={List} />
-              <Route path="/ws/:id/dashboard/:id/bo" component={BoardList} />
+              <ProtectedRoute
+                path="/ws/:id/dashboard/:id"
+                component={OpenBoard}
+                isAuth={loginState}
+              />
+              <ProtectedRoute
+                exact
+                path="/ws/:id"
+                component={OpenWs}
+                isAuth={loginState}
+              />
+              <ProtectedRoute
+                path="/ws/:id/dashboard/:id/li"
+                component={List}
+                isAuth={loginState}
+              />
+              <ProtectedRoute
+                path="/ws/:id/dashboard/:id/bo"
+                component={BoardList}
+                isAuth={loginState}
+              />
             </div>
             {settingState && (
               <div className="app__settings">
@@ -58,9 +87,11 @@ function App() {
             )}
           </>
         )}
-        <Route exact path="/login" component={Login} />
-      </Router>
-    </div>
+        {!loginState && (
+          <Route exact path={["/login", "/"]} component={Login} />
+        )}
+      </div>
+    </>
   );
 }
 

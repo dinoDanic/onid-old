@@ -10,7 +10,7 @@
   min-width: 30px;
   text-transform: uppercase;
   left: -2px;
-  top: -2px;
+  top: 0px;
   p {
     font-size: 8px;
   }
@@ -61,19 +61,26 @@
 }
 .createBoard__box {
 }
+//DEFAULT
+
+.brutalBox {
+  border: 1px solid black;
+  box-shadow: 2px 2px 0 0 black;
+  background: white;
+}
 
 //BRUTAL INPUT
 .brutalInput {
   margin: 3px 0 15px 0;
   margin-left: -2px;
-  border: 2px solid black;
+  border: 1px solid black;
   background: #ffffff;
   color: black;
   font-family: "Press Start 2P", cursive;
   padding: 14px 13px;
-  font-size: 10px;
+  font-size: 8px;
   outline: none;
-  box-shadow: 2px 2px 0 1px black;
+  box-shadow: 2px 2px 0 0px black;
   width: 100%;
   box-sizing: border-box;
 }

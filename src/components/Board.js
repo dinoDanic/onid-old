@@ -1,5 +1,4 @@
 import React from "react";
-import ListIcon from "@material-ui/icons/List";
 import "../styles/board.scss";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";

@@ -3,7 +3,7 @@
   position: absolute;
   right: 0px;
   width: 14px;
-  top: 2px;
+  top: 6px;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -38,7 +38,7 @@
 
   button {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     margin-top: 5px;
     color: $alphaBlack;
     &:first-child {

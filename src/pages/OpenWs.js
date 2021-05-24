@@ -112,24 +112,22 @@ function OpenWs() {
               <>
                 {members_ws.map((data) => {
                   return (
-                    <>
-                      <div className="openWs__user">
-                        <div className="openWs__avatar">
-                          <Avatar src={data.userPhoto} />
-                        </div>
-                        <div className="openWs__userName">
-                          <p>{data.userName}</p>
-                        </div>
-                        {data.userId === wsData.alfa && (
-                          <div
-                            className="openWs__alfa"
-                            style={{ background: wsData.color }}
-                          >
-                            <p>Creator</p>
-                          </div>
-                        )}
+                    <div className="openWs__user" key={data.userName}>
+                      <div className="openWs__avatar">
+                        <Avatar src={data.userPhoto} />
                       </div>
-                    </>
+                      <div className="openWs__userName">
+                        <p>{data.userName}</p>
+                      </div>
+                      {data.userId === wsData.alfa && (
+                        <div
+                          className="openWs__alfa"
+                          style={{ background: wsData.color }}
+                        >
+                          <p>Creator</p>
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </>
@@ -179,16 +177,18 @@ function OpenWs() {
         </TabPanel>
         <TabPanel value={value} index={0}>
           <h3>Recent Boards</h3>
-          {board &&
-            board.map((data) => {
-              return (
-                <div className="openWs__boards">
-                  <Link to={`/ws/${pathWsId}/dashboard/${data.id}/li`}>
-                    {<BrutalBtn tekst={data.name} height="50px" />}
-                  </Link>
-                </div>
-              );
-            })}
+          <div className="openWs__baordHolder">
+            {board &&
+              board.map((data) => {
+                return (
+                  <div className="openWs__boards" key={data.id}>
+                    <Link to={`/ws/${pathWsId}/dashboard/${data.id}/li`}>
+                      {<BrutalBtn tekst={data.name} height="50px" />}
+                    </Link>
+                  </div>
+                );
+              })}
+          </div>
           {board && <>{!board.length && <p>You have no Boards! </p>}</>}
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -202,13 +202,7 @@ function OpenWs() {
 function TabPanel(props) {
   const { children, value, index } = props;
   return (
-    <>
-      {value === index && (
-        <div className="openWs__content">
-          <p>{children}</p>
-        </div>
-      )}
-    </>
+    <>{value === index && <div className="openWs__content">{children}</div>}</>
   );
 }
 

@@ -29,15 +29,13 @@ function ListItem({
   timestamp,
   deadLine,
   deadLineState,
-  order,
   moduleData,
   assignState,
   statusState,
-  statusTask,
   dbName,
+  priorityState,
 }) {
   const wsData = useSelector((state) => state.wsData);
-  const db_Data = useSelector((state) => state.db_Data);
   const [createdByPhtotUrl, setCreatedByPhotoUrl] = useState("");
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [daysLeftColor, setDaysLeftColor] = useState("");
@@ -45,6 +43,7 @@ function ListItem({
   const [createdByOrder, setCreatedByOrder] = useState(0);
   const [createdDateOrder, setCreatedDateOrder] = useState(0);
   const [deadlineOrder, setDeadlineOrder] = useState(0);
+  const [priorityOrder, setPriorityOrder] = useState(0);
   const [assignOrder, setAssignOrder] = useState(0);
   const [statusOrder, setStatusOrder] = useState(0);
   const [chooseUserState, setChooseUserState] = useState(false);
@@ -83,11 +82,18 @@ function ListItem({
           return e.module;
         })
         .indexOf("Status");
+      let po = items
+        .map(function (e) {
+          return e.module;
+        })
+        .indexOf("Priority");
+
       setCreatedByOrder(cbo);
       setCreatedDateOrder(cdo);
       setDeadlineOrder(dlo);
       setAssignOrder(ao);
       setStatusOrder(so);
+      setPriorityOrder(po);
     };
     setOrder();
   }, [moduleData]);
@@ -394,6 +400,15 @@ function ListItem({
                 </AnimatePresence>
               </div>
             </>
+          )}
+          {priorityState && (
+            <div
+              className="listItem__comp boxShadow"
+              name="Priority"
+              style={{ order: priorityOrder }}
+            >
+              fadsfsad
+            </div>
           )}
         </div>
       </div>

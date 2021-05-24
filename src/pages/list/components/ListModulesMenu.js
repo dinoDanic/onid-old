@@ -15,6 +15,7 @@ function ListSettings() {
   const [deadLineState, setDeadLineState] = useState(false);
   const [assignState, setAssignState] = useState(false);
   const [statusState, setStatusState] = useState(false);
+  const [priorityState, setPriorityState] = useState(false);
 
   // check status of moddels and set it
   useEffect(() => {
@@ -43,6 +44,11 @@ function ListSettings() {
         setStatusState(true);
       } else {
         setStatusState(false);
+      }
+      if (activeModules.includes("Priority")) {
+        setPriorityState(true);
+      } else {
+        setPriorityState(false);
       }
     }
   }, [activeModules]);
@@ -153,6 +159,21 @@ function ListSettings() {
           <Switch
             size="small"
             checked={statusState}
+            color="primary"
+            name="checkedB"
+            inputProps={{ "aria-label": "primary checkbox" }}
+          />
+        </div>
+      </Button>
+      <Button>
+        <div
+          className="lM__priority lM__option"
+          onClick={() => handleFn("Priority", setPriorityState, priorityState)}
+        >
+          <p>Priority</p>
+          <Switch
+            size="small"
+            checked={priorityState}
             color="primary"
             name="checkedB"
             inputProps={{ "aria-label": "primary checkbox" }}

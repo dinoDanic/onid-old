@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loading, login } from "../actions";
+import { loading } from "../actions";
 import { useHistory } from "react-router-dom";
 import { db } from "../lib/firebase";
 import "../styles/workSpace.scss";
 import WS_icon from "./WS_icon";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import CreateWs from "../components/CreateWs";
 import Button from "./brutal/BrutalBtn";
 
@@ -72,11 +71,6 @@ function WorkSpace() {
       <div className="workSpace__addNew" onClick={() => setCreateWs(true)}>
         <Button tekst="+" />
       </div>
-      {/* <div className="workSpace__addNew">
-        <Button onClick={() => setCreateWs(true)}>
-          <AddCircleOutlineIcon />
-        </Button>
-      </div> */}
       {createWs && <CreateWs setCreateWs={setCreateWs} />}
     </div>
   );

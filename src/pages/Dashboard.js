@@ -9,13 +9,7 @@ import { currentWsId, wsDataAction, membersWs } from "../actions";
 
 //MATERIAL UI AND FRAMER
 import { AnimatePresence, motion } from "framer-motion";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import DeleteOutlineRoundedIcon from "@material-ui/icons/DeleteOutlineRounded";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import ColorLensOutlinedIcon from "@material-ui/icons/ColorLensOutlined";
-import ChevronRightOutlinedIcon from "@material-ui/icons/ChevronRightOutlined";
-import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 
 //COMPONENTS
 import Board from "../components/Board";
@@ -317,14 +311,18 @@ function Dashboard() {
       <AnimatePresence>
         {loading && (
           <motion.div className="app__loading" exit={{ opacity: 0 }}>
-            <div className="app__loadingSpin">
+            {/* <div className="app__loadingSpin">
               <CircularProgress />
-            </div>
-            {/* <motion.div
-              className="app__loadingBox"
-              animate={{ rotate: 180 }}
-              transition={{ repeat: Infinity, repeatType: "reverse" }}
-            ></motion.div> */}
+            </div> */}
+            <motion.div
+              className="app__loadingBox "
+              animate={{ rotate: 380 }}
+              transition={{
+                repeat: Infinity,
+                repeatType: "reverse",
+                duration: 0.5,
+              }}
+            ></motion.div>
           </motion.div>
         )}
       </AnimatePresence>
