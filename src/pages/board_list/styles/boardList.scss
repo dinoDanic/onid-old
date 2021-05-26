@@ -1,0 +1,17 @@
+.boardList {
+  padding: 0 30px;
+  display: flex;
+  .column {
+    flex: 1;
+
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .droppable-col {
+    background: rgb(219, 219, 219);
+    padding: 10px;
+  }
+}

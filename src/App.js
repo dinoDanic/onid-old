@@ -17,6 +17,7 @@ import List from "./pages/list/List";
 import User from "./components/User";
 import ListModulesMenu from "./pages/list/components/ListModulesMenu";
 import BoardList from "./pages/board_list/BoardList";
+import { AnimatePresence, motion } from "framer-motion";
 
 function App() {
   const dispatch = useDispatch();
@@ -91,6 +92,24 @@ function App() {
           <Route exact path={["/login", "/"]} component={Login} />
         )}
       </div>
+      <AnimatePresence>
+        {loadingState && (
+          <motion.div className="app__loading" exit={{ opacity: 0 }}>
+            {/* <div className="app__loadingSpin">
+              <CircularProgress />
+            </div> */}
+            <motion.div
+              className="app__loadingBox "
+              animate={{ rotate: 380 }}
+              transition={{
+                repeat: Infinity,
+                repeatType: "reverse",
+                duration: 0.5,
+              }}
+            ></motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

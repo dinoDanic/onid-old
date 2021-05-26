@@ -51,6 +51,7 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
         status: newStatus,
         assignedUser: assignUserId,
         deadLine: selectedDate,
+        priority: priorityStatus.priority,
       })
       .then((data) => {
         db.collection("workStation")

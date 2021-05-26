@@ -4,12 +4,10 @@ import { useHistory } from "react-router-dom";
 import { db, timestamp } from "../../../lib/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { activeModulesAction } from "../../../actions";
-import { settings } from "../../../actions";
 
 //MATERIAL UI AND FRAMER
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import { Button } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 //COMPOPNENTS
@@ -20,10 +18,9 @@ import ModuleTypes from "./ModuleTypes";
 import "../../../styles/list.scss";
 import "../../../styles/fn.scss";
 
-function ToDo({ dbName }) {
+function Task({ dbName }) {
   const userInfo = useSelector((state) => state.userInfo);
   const activeModules = useSelector((state) => state.activeModules);
-  const db_Data = useSelector((state) => state.db_Data);
   const dispatch = useDispatch();
   const history = useHistory();
   const boardId = history.location.pathname.split("/")[4];
@@ -43,8 +40,9 @@ function ToDo({ dbName }) {
   const [counterTask, setCounterTask] = useState(0);
   const [taskColor, setTaskColor] = useState("#000");
   const [taskOpen, setTaskOpen] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const createNewToDo = (e) => {
+  const createNewTask = (e) => {
     e.preventDefault();
     if (currentWsId && boardId && dbName) {
       if (inputRef.current.value !== "") {
@@ -58,6 +56,8 @@ function ToDo({ dbName }) {
             created: timestamp,
             userId: userInfo.uid,
             status: dbName,
+            priority: "Normal",
+            index: currentIndex,
           })
           .then((data) => {
             db.collection("workStation")
@@ -80,7 +80,6 @@ function ToDo({ dbName }) {
 
   useEffect(() => {
     // get list ToDo data and counter
-    console.log("getting to do");
     const getListToDo = () => {
       if (currentWsId && boardId && dbName) {
         db.collection("workStation")
@@ -100,6 +99,7 @@ function ToDo({ dbName }) {
             });
             setListToDo(list);
           });
+        console.log(listToDo);
       }
     };
     // get Module data
@@ -119,7 +119,23 @@ function ToDo({ dbName }) {
         });
     }
 
+    const getCurrentIndex = () => {
+      db.collection("workStation")
+        .doc(currentWsId)
+        .collection("dashboard")
+        .doc(boardId)
+        .collection("task")
+        .onSnapshot((data) => {
+          if (data.size === 0) {
+            setCurrentIndex(0);
+          } else {
+            setCurrentIndex(data.size - 1);
+          }
+        });
+    };
+
     getListToDo();
+    getCurrentIndex();
   }, [dbName, boardId]);
 
   useEffect(() => {
@@ -271,6 +287,7 @@ function ToDo({ dbName }) {
 
   return (
     <>
+      {currentIndex}
       <div className="list__header">
         <div className="list__toDo list__status">
           <div
@@ -381,6 +398,7 @@ function ToDo({ dbName }) {
                                 statusState={statusState}
                                 statusTask={data.status}
                                 dbName={dbName}
+                                priority={data.priority}
                               />
                             </li>
                           )}
@@ -395,7 +413,7 @@ function ToDo({ dbName }) {
 
           <ul className="list__newTask">
             <li>
-              <form onSubmit={(e) => createNewToDo(e)}>
+              <form onSubmit={(e) => createNewTask(e)}>
                 <input
                   type="text"
                   placeholder="new quick task"
@@ -412,4 +430,4 @@ function ToDo({ dbName }) {
   );
 }
 
-export default ToDo;
+export default Task;

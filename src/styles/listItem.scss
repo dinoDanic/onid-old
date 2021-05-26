@@ -26,7 +26,7 @@
   min-width: 100px;
   max-width: 100px;
   height: 30px;
-  margin-left: 3px;
+  margin-left: 5px;
 }
 .boxShadow {
   border: 1px solid black;
@@ -176,20 +176,59 @@
 .listItem__statusMenu {
   position: absolute;
   border: 1px solid rgb(230, 230, 230);
-  top: -100%;
-  padding: 5px;
+  bottom: 34px;
+  padding: 2px;
   background: white;
-  border: 1px solid black;
+  border: 2px solid black;
   z-index: 100;
 }
 .listItem__statusItem {
-  width: 100px;
+  width: 95px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   border: 1px solid black;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.listItem__priority {
+  position: relative;
+  cursor: pointer;
+}
+
+.listItem__priorityBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  .MuiSvgIcon-root {
+    margin-left: -10px;
+    color: white;
+  }
+}
+.listItem__priorityMenu {
+  width: 95px;
+  background: white;
+  border: 2px solid black;
+  min-height: 20px;
+  margin-left: -1px;
+  position: absolute;
+  bottom: 34px;
+  z-index: 100;
+  padding: 2px;
+}
+.listItem__choosePriority {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  margin-bottom: 2px;
+  border: 1px solid black;
+  .MuiSvgIcon-root {
+    color: white;
+  }
   &:last-child {
     margin-bottom: 0;
   }

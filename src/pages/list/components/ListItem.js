@@ -17,6 +17,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import { AnimatePresence, motion } from "framer-motion";
+import PriorityHighIcon from "@material-ui/icons/PriorityHigh";
 
 function ListItem({
   currentWsId,
@@ -34,8 +35,10 @@ function ListItem({
   statusState,
   dbName,
   priorityState,
+  priority,
 }) {
   const wsData = useSelector((state) => state.wsData);
+  const db_Data = useSelector((state) => state.dbData);
   const [createdByPhtotUrl, setCreatedByPhotoUrl] = useState("");
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [daysLeftColor, setDaysLeftColor] = useState("");
@@ -53,6 +56,8 @@ function ListItem({
   const [statusMenuState, setStatusMenuState] = useState(false);
   const [statusType, setStatusType] = useState("");
   const [allColors, setAllColors] = useState();
+  const [bgPriority, setBgPriority] = useState("");
+  const [priorityMenuState, setPriorityMenuState] = useState(false);
 
   useEffect(() => {
     const setOrder = () => {
@@ -181,7 +186,6 @@ function ListItem({
   }, [wsData]);
 
   const assignUser = (id) => {
-    console.log(id);
     db.collection("workStation")
       .doc(currentWsId)
       .collection("dashboard")
@@ -198,17 +202,19 @@ function ListItem({
   };
 
   useEffect(() => {
-    // check for assigned user
     db.collection("workStation")
       .doc(currentWsId)
       .collection("dashboard")
       .doc(boardId)
       .collection("task")
       .doc(listId)
-      .get()
-      .then((data) => {
+      .onSnapshot((data) => {
+        // check for assigned user
         if (data.exists) {
-          if (data.data().assignedUser != undefined) {
+          if (
+            data.data().assignedUser != undefined &&
+            data.data().assignedUser != ""
+          ) {
             db.collection("users")
               .doc(data.data().assignedUser)
               .get()
@@ -217,8 +223,6 @@ function ListItem({
                   setAssignedUser(data.data().userPhoto);
                 }
               });
-          } else {
-            return;
           }
         }
       });
@@ -242,6 +246,19 @@ function ListItem({
       });
   }, []);
 
+  useEffect(() => {
+    //get bg priority
+    const getBgPriority = () => {
+      // background of priority
+      const Array = db_Data.priority;
+      const result = Array.find((obj) => {
+        return obj.name === priority;
+      });
+      setBgPriority(result.color);
+    };
+    getBgPriority();
+  }, [priority]);
+
   const changeStatus = (name) => {
     console.log(name);
     db.collection("workStation")
@@ -253,6 +270,19 @@ function ListItem({
       .update({
         status: name,
       });
+  };
+
+  const setNewState = (name) => {
+    db.collection("workStation")
+      .doc(currentWsId)
+      .collection("dashboard")
+      .doc(boardId)
+      .collection("task")
+      .doc(listId)
+      .update({
+        priority: name,
+      });
+    setPriorityMenuState(false);
   };
 
   return (
@@ -376,9 +406,9 @@ function ListItem({
                       ></div>
                       <motion.div
                         className="listItem__statusMenu"
-                        exit={{ scale: 0.3, opacity: 0 }}
-                        initial={{ scale: 0.3 }}
-                        animate={{ scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        initial={{ y: 10, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
                       >
                         {statusType &&
                           statusType.map((name) => {
@@ -402,13 +432,55 @@ function ListItem({
             </>
           )}
           {priorityState && (
-            <div
-              className="listItem__comp boxShadow"
-              name="Priority"
-              style={{ order: priorityOrder }}
-            >
-              fadsfsad
-            </div>
+            <>
+              <div
+                className="listItem__comp boxShadow listItem__priority"
+                name="Priority"
+                style={{
+                  order: priorityOrder,
+                }}
+              >
+                <AnimatePresence>
+                  {priorityMenuState && (
+                    <>
+                      <div
+                        className="layer"
+                        onClick={() => setPriorityMenuState(!priorityMenuState)}
+                      ></div>
+                      <motion.div
+                        className="listItem__priorityMenu"
+                        exit={{ opacity: 0 }}
+                        initial={{ y: 10, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                      >
+                        {db_Data?.priority?.map((data) => {
+                          return (
+                            <motion.div
+                              className="listItem__choosePriority"
+                              style={{ background: data.color }}
+                              whileHover={{ scale: 1.03 }}
+                              whileTap={{ scale: 0.9 }}
+                              onClick={() => setNewState(data.name)}
+                            >
+                              <PriorityHighIcon fontSize="small" />
+                              <p>{data.name}</p>
+                            </motion.div>
+                          );
+                        })}
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+                <div
+                  className="listItem__priorityBox"
+                  style={{ background: bgPriority }}
+                  onClick={() => setPriorityMenuState(!priorityMenuState)}
+                >
+                  <PriorityHighIcon fontSize="small" />
+                  <p>{priority}</p>
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>

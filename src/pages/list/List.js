@@ -8,15 +8,11 @@ import { dbData } from "../../actions";
 import Task from "./components/Task";
 
 //MATERIAL UI
-import { Avatar, Button, Fab, Grid } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import { AnimatePresence, motion } from "framer-motion";
-
+import { AnimatePresence } from "framer-motion";
 import CreateTask from "./components/CreateTask";
 import BrutalBtn from "../../components/brutal/BrutalBtn";
 
 function List() {
-  const members_ws = useSelector((state) => state.membersWs);
   const db_Data = useSelector((state) => state.dbData);
   const wsDataColor = useSelector((state) => state.wsData.color);
   const dispatch = useDispatch();

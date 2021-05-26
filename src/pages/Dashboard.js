@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { db } from "../lib/firebase";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, CircularProgress } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import BrutalBtn from "../components/brutal/BrutalBtn";
 import "../styles/dashboard.scss";
-import { currentWsId, wsDataAction, membersWs } from "../actions";
+import { wsDataAction, membersWs } from "../actions";
 
 //MATERIAL UI AND FRAMER
 import { AnimatePresence, motion } from "framer-motion";
@@ -19,7 +19,6 @@ import Dashboard__selectColor from "../components/Dashboard_selectColor";
 
 function Dashboard() {
   const userInfo = useSelector((state) => state.userInfo);
-  const loading = useSelector((state) => state.loading);
   const wsData = useSelector((state) => state.wsData);
   const [color, setColor] = useState("#333");
   const dispatch = useDispatch();
@@ -308,24 +307,6 @@ function Dashboard() {
           </>
         )}
       </div>
-      <AnimatePresence>
-        {loading && (
-          <motion.div className="app__loading" exit={{ opacity: 0 }}>
-            {/* <div className="app__loadingSpin">
-              <CircularProgress />
-            </div> */}
-            <motion.div
-              className="app__loadingBox "
-              animate={{ rotate: 380 }}
-              transition={{
-                repeat: Infinity,
-                repeatType: "reverse",
-                duration: 0.5,
-              }}
-            ></motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }
