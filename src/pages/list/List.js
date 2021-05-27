@@ -21,6 +21,7 @@ function List() {
   const boardId = history.location.pathname.split("/")[4];
   const [taskWindow, setTaskWindow] = useState(false);
 
+  // get db_Data and dispatch
   useEffect(() => {
     const get_db_Data = () => {
       db.collection("workStation")
@@ -29,7 +30,6 @@ function List() {
         .doc(boardId)
         .onSnapshot((docData) => {
           if (docData.exists) {
-            console.log("dispatching main db_Data");
             dispatch(dbData(docData.data()));
           }
         });

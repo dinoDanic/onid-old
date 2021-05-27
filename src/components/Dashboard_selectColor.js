@@ -11,7 +11,7 @@ function Dashboard_selectColor({ pathWsId }) {
   return (
     <div className="colorPicker3">
       <input
-        value="#f4275d"
+        value="#E2445C"
         className="colorPicker__color1"
         onClick={(e) => setColor(e.target.value)}
       />

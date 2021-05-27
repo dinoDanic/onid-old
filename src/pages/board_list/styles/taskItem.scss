@@ -1,0 +1,77 @@
+.taskItem {
+  padding: 10px;
+  margin-bottom: 10px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .taskName {
+    margin-bottom: 10px;
+  }
+  .module {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    .moduleBox {
+      width: 100px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      p {
+        color: white;
+      }
+    }
+    // modules
+    .deadline {
+      background: #547598;
+      position: relative;
+    }
+    .dateCreated {
+      background: #6d8daf;
+    }
+    .daysLeft {
+      min-width: 13px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      right: 0;
+      position: absolute;
+      height: 30px;
+      p {
+        font-size: 10px;
+      }
+    }
+  }
+  .datePicker {
+    position: absolute;
+    .MuiInputBase-inputMarginDense {
+    }
+    .MuiIconButton-root {
+      padding: 0;
+    }
+    .MuiFormControl-marginNormal {
+      margin: 0;
+    }
+    .MuiInput-root {
+    }
+    .MuiIconButton-label {
+      background: red;
+      position: absolute;
+      width: 100px;
+      height: 20px;
+      right: 0;
+      opacity: 1;
+    }
+    .MuiInputBase-inputMarginDense {
+      opacity: 0;
+    }
+    .MuiInputBase-root {
+      opacity: 0;
+    }
+  }
+}

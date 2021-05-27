@@ -1,17 +1,47 @@
 .boardList {
   padding: 0 30px;
   display: flex;
+  flex-wrap: wrap;
   .column {
     flex: 1;
-
+    min-width: 300px;
+    max-width: 350px;
     margin-right: 10px;
 
     &:last-child {
       margin-right: 0;
     }
   }
+  .item {
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &:hover {
+      .item__drag {
+        opacity: 1;
+      }
+    }
+  }
+  .item__drag {
+    opacity: 0;
+    margin-bottom: -7px;
+  }
   .droppable-col {
-    background: rgb(219, 219, 219);
     padding: 10px;
+    margin-bottom: 10px;
+    border-top: 0px;
+    padding-top: 0;
+    position: relative;
+  }
+  .statusName {
+    border-bottom: none;
+    padding: 20px 0;
+    h4 {
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      color: white;
+    }
   }
 }

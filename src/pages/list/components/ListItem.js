@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../../lib/firebase";
 import { useSelector } from "react-redux";
 
+// funcitons
+import { convertDate } from "../../../functions";
+
 //DATE STUF
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
@@ -61,6 +64,9 @@ function ListItem({
 
   useEffect(() => {
     const setOrder = () => {
+      if (!moduleData) {
+        return;
+      }
       const items = Array.from(moduleData);
       let cbo = items
         .map(function (e) {
@@ -101,7 +107,7 @@ function ListItem({
       setPriorityOrder(po);
     };
     setOrder();
-  }, [moduleData]);
+  }, [moduleData, wsData]);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -110,6 +116,8 @@ function ListItem({
       .collection("dashboard")
       .doc(boardId)
       .collection("task")
+      .doc("123")
+      .collection(dbName)
       .doc(listId)
       .set(
         {
@@ -117,15 +125,6 @@ function ListItem({
         },
         { merge: true }
       );
-  };
-  const getDateCreated = () => {
-    if (timestamp) {
-      let myTime = timestamp.toDate();
-      let date = myTime.getDate();
-      let month = myTime.getMonth();
-      let year = myTime.getFullYear();
-      return `${date}.${month + 1}.${year}`;
-    }
   };
 
   const getDeadlineDate = () => {
@@ -144,6 +143,10 @@ function ListItem({
         .doc(userId)
         .get()
         .then((docData) => {
+          if (!docData.exists) {
+            console.log("data dose not exists, users");
+            return;
+          }
           setCreatedByPhotoUrl(docData.data().userPhoto);
         });
     };
@@ -250,25 +253,57 @@ function ListItem({
     //get bg priority
     const getBgPriority = () => {
       // background of priority
-      const Array = db_Data.priority;
-      const result = Array.find((obj) => {
-        return obj.name === priority;
-      });
-      setBgPriority(result.color);
+      if (db_Data.priority) {
+        const Array = db_Data.priority;
+        const result = Array.find((obj) => {
+          return obj.name === priority;
+        });
+        setBgPriority(result.color);
+      }
     };
     getBgPriority();
   }, [priority]);
 
   const changeStatus = (name) => {
-    console.log(name);
+    let copy = {};
+    if (name === dbName) {
+      return;
+    }
     db.collection("workStation")
       .doc(currentWsId)
       .collection("dashboard")
       .doc(boardId)
       .collection("task")
+      .doc("123")
+      .collection(dbName)
       .doc(listId)
-      .update({
-        status: name,
+      .get()
+      .then((docData) => {
+        copy = docData.data();
+      })
+      .then(() => {
+        db.collection("workStation")
+          .doc(currentWsId)
+          .collection("dashboard")
+          .doc(boardId)
+          .collection("task")
+          .doc("123")
+          .collection(name)
+          .doc(listId)
+          .set({
+            ...copy,
+          });
+      })
+      .then(() => {
+        db.collection("workStation")
+          .doc(currentWsId)
+          .collection("dashboard")
+          .doc(boardId)
+          .collection("task")
+          .doc("123")
+          .collection(dbName)
+          .doc(listId)
+          .delete();
       });
   };
 
@@ -308,7 +343,7 @@ function ListItem({
               name="Created Date"
               style={{ order: createdDateOrder }}
             >
-              <p>{getDateCreated()}</p>
+              <p>{convertDate(timestamp)}</p>
             </div>
           )}
           {deadLineState && (

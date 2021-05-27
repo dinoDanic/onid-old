@@ -1,3 +1,4 @@
+import { roundToNearestMinutes } from "date-fns";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import BrutalBtn from "../components/brutal/BrutalBtn";
@@ -43,9 +44,9 @@ function CreateBoard({ setNewBoard }) {
 
           statusType: ["to do", "stuck", "done"],
           colors: {
-            "to do": "#dc00dc",
-            done: "#0bdc00",
-            stuck: "#e6563c",
+            "to do": "#D059D0",
+            done: "#3FC875",
+            stuck: "#E2445C",
           },
           // PRIORITYS
           priority: [
@@ -56,7 +57,6 @@ function CreateBoard({ setNewBoard }) {
           ],
         })
         .then((docData) => {
-          console.log(docData.id);
           db.collection("workStation")
             .doc(currentWsId)
             .collection("dashboard")
@@ -101,38 +101,55 @@ function CreateBoard({ setNewBoard }) {
           createAllModules("Created Date", 4);
           createAllModules("Deadline", 5);
 
+          /* //SET DEFAULT TASK => TO DO, STUCK, DONE
+          const createDefaultTasks = (name) => {
+            db.collection("workStation")
+              .doc(currentWsId)
+              .collection("dashboard")
+              .doc(docData.id)
+              .collection("task")
+              .doc("123")
+              .collection(name)
+              .add({});
+          };
+          createDefaultTasks("to do");
+          createDefaultTasks("stuck");
+          createDefaultTasks("done"); */
+          // end
           setNewBoard(false);
         });
     }
   };
 
   return (
-    <div className="brutalPop">
-      <div
-        className="brutalPop__layer"
-        onClick={() => setNewBoard(false)}
-      ></div>
-      <div className="brutalPop__box">
-        <div className="createBoard__header">
-          <h2>Create Board</h2>
-        </div>
-        <div className="createBoard__info"></div>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <input
-            type="text"
-            className="brutalInput"
-            placeholder="Board Name"
-            onChange={(e) => setNewBoardName(e.target.value)}
-          />
-          <div
-            className="createBoard__brutalBrn"
-            onClick={() => createNewBoard()}
-          >
-            <BrutalBtn tekst="Create" width="80px" />
+    <>
+      <div className="brutalPop">
+        <div
+          className="brutalPop__layer"
+          onClick={() => setNewBoard(false)}
+        ></div>
+        <div className="brutalPop__box">
+          <div className="createBoard__header">
+            <h2>Create Board</h2>
           </div>
-        </form>
+          <div className="createBoard__info"></div>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <input
+              type="text"
+              className="brutalInput"
+              placeholder="Board Name"
+              onChange={(e) => setNewBoardName(e.target.value)}
+            />
+            <div
+              className="createBoard__brutalBrn"
+              onClick={() => createNewBoard()}
+            >
+              <BrutalBtn tekst="Create" width="80px" />
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

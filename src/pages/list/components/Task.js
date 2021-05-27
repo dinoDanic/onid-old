@@ -27,7 +27,7 @@ function Task({ dbName }) {
   const currentWsId = history.location.pathname.split("/")[2];
   const inputRef = useRef();
   const [inputTask, setInputTask] = useState("");
-  const [listToDo, setListToDo] = useState();
+  const [listTasks, setListTasks] = useState();
   const [createdByState, setCreatedByState] = useState(false);
   const [createdDateState, setCreatedDateState] = useState(false);
   const [statusState, setStatusState] = useState(false);
@@ -51,11 +51,12 @@ function Task({ dbName }) {
           .collection("dashboard")
           .doc(boardId)
           .collection("task")
+          .doc("123")
+          .collection(dbName)
           .add({
             taskName: inputTask,
             created: timestamp,
             userId: userInfo.uid,
-            status: dbName,
             priority: "Normal",
             index: currentIndex,
           })
@@ -65,6 +66,8 @@ function Task({ dbName }) {
               .collection("dashboard")
               .doc(boardId)
               .collection("task")
+              .doc("123")
+              .collection(dbName)
               .doc(data.id)
               .set(
                 {
@@ -79,16 +82,16 @@ function Task({ dbName }) {
   };
 
   useEffect(() => {
-    // get list ToDo data and counter
-    const getListToDo = () => {
+    // Get Tasks
+    const getTasks = () => {
       if (currentWsId && boardId && dbName) {
         db.collection("workStation")
           .doc(currentWsId)
           .collection("dashboard")
           .doc(boardId)
           .collection("task")
-          .where("status", "==", dbName)
-          .orderBy("created", "desc")
+          .doc("123")
+          .collection(dbName)
           .onSnapshot((doc) => {
             // get number of tasks
             setCounterTask(doc.size);
@@ -97,9 +100,8 @@ function Task({ dbName }) {
             doc.forEach((data) => {
               list.push(data.data());
             });
-            setListToDo(list);
+            setListTasks(list);
           });
-        console.log(listToDo);
       }
     };
     // get Module data
@@ -125,6 +127,8 @@ function Task({ dbName }) {
         .collection("dashboard")
         .doc(boardId)
         .collection("task")
+        .doc("123")
+        .collection(dbName)
         .onSnapshot((data) => {
           if (data.size === 0) {
             setCurrentIndex(0);
@@ -134,7 +138,7 @@ function Task({ dbName }) {
         });
     };
 
-    getListToDo();
+    getTasks();
     getCurrentIndex();
   }, [dbName, boardId]);
 
@@ -210,10 +214,10 @@ function Task({ dbName }) {
   }, [activeModules]);
 
   function handleDragEnd(result) {
-    const items = Array.from(listToDo);
+    const items = Array.from(listTasks);
     const [reorderItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderItem);
-    setListToDo(items);
+    setListTasks(items);
   }
 
   function handleDragEndModules(result) {
@@ -287,7 +291,7 @@ function Task({ dbName }) {
 
   return (
     <>
-      {currentIndex}
+      {/* {currentIndex} */}
       <div className="list__header">
         <div className="list__toDo list__status">
           <div
@@ -351,8 +355,8 @@ function Task({ dbName }) {
             <Droppable droppableId="listItems">
               {(provided) => (
                 <ul {...provided.droppableProps} ref={provided.innerRef}>
-                  {listToDo &&
-                    listToDo.map((data, index) => {
+                  {listTasks &&
+                    listTasks.map((data, index) => {
                       return (
                         <Draggable
                           key={data.listId}

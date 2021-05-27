@@ -29,6 +29,20 @@ function StatusTypes({ data, boardId, currentWsId, db_Data }) {
         colors,
       });
 
+    db.collection("workStation")
+      .doc(currentWsId)
+      .collection("dashboard")
+      .doc(boardId)
+      .collection("task")
+      .doc("123")
+      .collection(data)
+      .get()
+      .then((docs) => {
+        docs.forEach((doc) => {
+          doc.ref.delete();
+        });
+      });
+
     setXpos(130);
   };
   return (

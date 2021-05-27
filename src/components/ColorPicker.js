@@ -28,7 +28,7 @@ function ColorPicker({ name }) {
     <div className="colorPicker boxShadow">
       <p>Pick color</p>
       <input
-        value="#f4275d"
+        value="#D059D0"
         className="colorPicker__color1"
         onClick={(e) => setColor(e)}
       />

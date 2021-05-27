@@ -60,7 +60,6 @@ function Dashboard() {
             list.push(docData.data());
           });
       });
-      console.log("dispatching membersWs");
       dispatch(membersWs(list));
     };
     getMembersId();
