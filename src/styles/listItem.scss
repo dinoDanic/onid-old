@@ -3,12 +3,17 @@
   display: flex;
   justify-content: space-between;
   height: 50px;
-  padding: 0 10px;
+  padding: 0 5px;
+  a {
+    flex-grow: 1;
+  }
 }
 .listItem__taskName {
   display: flex;
+  height: 100%;
   align-items: center;
   min-width: 200px;
+  flex-grow: 1;
 }
 .listItem__fn {
   display: flex;
@@ -25,7 +30,7 @@
 .listItem__comp {
   min-width: 100px;
   max-width: 100px;
-  height: 30px;
+  height: 40px;
   margin-left: 5px;
 }
 .boxShadow {
@@ -46,10 +51,10 @@
   align-items: center;
   justify-content: center;
   .MuiAvatar-root {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 0;
-    box-shadow: 2px 2px 0 0 black;
+    /*   box-shadow: 2px 2px 0 0 black; */
   }
 }
 .listItem__deadLine {
@@ -128,18 +133,18 @@
 .listItem__assignAvatar {
   cursor: pointer;
   .MuiAvatar-root {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 0;
-    box-shadow: 2px 2px 0 0 black;
+    /*     box-shadow: 2px 2px 0 0 black; */
   }
 }
 .listItem__chooseUser {
   position: absolute;
-  border: 1px solid black;
-  top: 0;
+  border: 2px solid black;
+  bottom: 36px;
   background: white;
-  padding: 5px;
+  padding: 3px;
   z-index: 100;
   p {
     color: black;
@@ -151,7 +156,7 @@
   cursor: pointer;
   align-items: center;
   margin-bottom: 10px;
-  padding: 10px 20px;
+  padding: 5px 10px;
   &:last-child {
     margin-bottom: 0px;
   }
@@ -203,20 +208,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30px;
+  height: 100%;
   .MuiSvgIcon-root {
     margin-left: -10px;
     color: white;
+    font-size: 15px;
   }
 }
 .listItem__priorityMenu {
-  width: 95px;
+  width: 100px;
   background: white;
-  border: 2px solid black;
   min-height: 20px;
-  margin-left: -1px;
   position: absolute;
-  bottom: 34px;
+  left: -2px;
+  bottom: 41px;
   z-index: 100;
   padding: 2px;
 }
@@ -225,7 +230,6 @@
   align-items: center;
   height: 30px;
   margin-bottom: 2px;
-  border: 1px solid black;
   .MuiSvgIcon-root {
     color: white;
   }

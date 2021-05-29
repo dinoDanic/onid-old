@@ -21,6 +21,7 @@ import {
 } from "@material-ui/pickers";
 import { AnimatePresence, motion } from "framer-motion";
 import PriorityHighIcon from "@material-ui/icons/PriorityHigh";
+import { Link } from "react-router-dom";
 
 function ListItem({
   currentWsId,
@@ -194,6 +195,8 @@ function ListItem({
       .collection("dashboard")
       .doc(boardId)
       .collection("task")
+      .doc("123")
+      .collection(dbName)
       .doc(listId)
       .set(
         {
@@ -210,6 +213,8 @@ function ListItem({
       .collection("dashboard")
       .doc(boardId)
       .collection("task")
+      .doc("123")
+      .collection(dbName)
       .doc(listId)
       .onSnapshot((data) => {
         // check for assigned user
@@ -258,6 +263,9 @@ function ListItem({
         const result = Array.find((obj) => {
           return obj.name === priority;
         });
+        if (result === undefined) {
+          return;
+        }
         setBgPriority(result.color);
       }
     };
@@ -313,6 +321,8 @@ function ListItem({
       .collection("dashboard")
       .doc(boardId)
       .collection("task")
+      .doc("123")
+      .collection(dbName)
       .doc(listId)
       .update({
         priority: name,
@@ -322,9 +332,13 @@ function ListItem({
 
   return (
     <div className="listItem">
-      <div className="listItem__taskName">
-        <p>{name}</p>
-      </div>
+      <Link
+        to={`/ws/${currentWsId}/dashboard/${boardId}/li/${dbName}/${listId}`}
+      >
+        <div className="listItem__taskName">
+          <p>{name}</p>
+        </div>
+      </Link>
 
       <div className="listItem__fnHolder">
         <div className="listItem__fn">
@@ -339,7 +353,7 @@ function ListItem({
           )}
           {createdAt && (
             <div
-              className="listItem__createdAt listItem__comp boxShadow"
+              className="listItem__createdAt listItem__comp "
               name="Created Date"
               style={{ order: createdDateOrder }}
             >
@@ -349,7 +363,7 @@ function ListItem({
           {deadLineState && (
             <>
               <div
-                className="listItem__deadLine listItem__comp boxShadow"
+                className="listItem__deadLine listItem__comp "
                 name="Deadline"
                 style={{ order: deadlineOrder }}
               >
@@ -397,36 +411,42 @@ function ListItem({
                   onClick={() => setChooseUserState(!chooseUserState)}
                 />
               </div>
-              {chooseUserState && (
-                <>
-                  <div
-                    className="layer"
-                    onClick={() => setChooseUserState(!chooseUserState)}
-                  ></div>
-                  <div className="listItem__chooseUser">
-                    {chooseUsersData &&
-                      chooseUsersData.map((data) => {
-                        return (
-                          <>
-                            <div
-                              className="listItem__chooseUserInside"
-                              onClick={() => assignUser(data.userId)}
-                            >
-                              <Avatar src={data.userPhoto} />
-                              <p>{data.userName}</p>
-                            </div>
-                          </>
-                        );
-                      })}
-                  </div>
-                </>
-              )}
+              <AnimatePresence>
+                {chooseUserState && (
+                  <>
+                    <div
+                      className="layer"
+                      onClick={() => setChooseUserState(!chooseUserState)}
+                    ></div>
+                    <motion.div
+                      className="listItem__chooseUser"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      {chooseUsersData &&
+                        chooseUsersData.map((data) => {
+                          return (
+                            <>
+                              <div
+                                className="listItem__chooseUserInside"
+                                onClick={() => assignUser(data.userId)}
+                              >
+                                <Avatar src={data.userPhoto} />
+                                <p>{data.userName}</p>
+                              </div>
+                            </>
+                          );
+                        })}
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </div>
           )}
           {statusState && (
             <>
               <div
-                className="listItem__comp listItem__status boxShadow"
+                className="listItem__comp listItem__status "
                 name="Status"
                 style={{ order: statusOrder, background: statusBg }}
                 onClick={() => setStatusMenuState(!statusMenuState)}
@@ -441,7 +461,6 @@ function ListItem({
                       ></div>
                       <motion.div
                         className="listItem__statusMenu"
-                        exit={{ opacity: 0 }}
                         initial={{ y: 10, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                       >
@@ -469,7 +488,7 @@ function ListItem({
           {priorityState && (
             <>
               <div
-                className="listItem__comp boxShadow listItem__priority"
+                className="listItem__comp  listItem__priority"
                 name="Priority"
                 style={{
                   order: priorityOrder,
@@ -484,15 +503,22 @@ function ListItem({
                       ></div>
                       <motion.div
                         className="listItem__priorityMenu"
-                        exit={{ opacity: 0 }}
                         initial={{ y: 10, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
+                        animate={{
+                          y: 0,
+                          opacity: 1,
+                        }}
                       >
                         {db_Data?.priority?.map((data) => {
                           return (
                             <motion.div
                               className="listItem__choosePriority"
                               style={{ background: data.color }}
+                              initial={{ opacity: 0, scale: 0.5 }}
+                              animate={{
+                                opacity: 1,
+                                scale: 1,
+                              }}
                               whileHover={{ scale: 1.03 }}
                               whileTap={{ scale: 0.9 }}
                               onClick={() => setNewState(data.name)}

@@ -12,6 +12,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
+    position: relative;
     &:last-child {
       margin-bottom: 0;
     }
@@ -26,6 +27,94 @@
       }
     }
     // modules
+    .status {
+      cursor: pointer;
+      .chooseStatus {
+        background: white;
+        border: 2px solid black;
+        position: absolute;
+        bottom: 43px;
+        width: 100px;
+        p {
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 3px;
+        }
+      }
+    }
+    .priority {
+      cursor: pointer;
+      .choosePriority {
+        background: white;
+        border: 2px solid black;
+        position: absolute;
+        bottom: 43px;
+        width: 100px;
+        p {
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 3px;
+        }
+      }
+    }
+    .createdBy {
+      justify-content: center;
+      width: 100px;
+
+      .MuiAvatar-root {
+        width: 30px;
+        height: 30px;
+        margin-left: 3px;
+        box-shadow: none;
+      }
+      p {
+        color: black;
+        margin-left: 4px;
+        font-size: 10px;
+      }
+    }
+    .assigned {
+      cursor: pointer;
+      position: relative;
+      justify-content: center;
+      .MuiAvatar-root {
+        width: 30px;
+        height: 30px;
+        margin-left: 5px;
+        box-shadow: none;
+      }
+      p {
+        color: black;
+        margin-left: 4px;
+        font-size: 11px;
+      }
+      .choose {
+        position: absolute;
+        left: -32px;
+        bottom: 30px;
+        background: white;
+        border: 1px solid black;
+        width: fit-content;
+        cursor: pointer;
+        z-index: 250;
+      }
+      .chooseResults {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        margin: 3px;
+        padding: 10px;
+        z-index: 550;
+        &:hover {
+          background: #f6f6f6;
+        }
+      }
+    }
     .deadline {
       background: #547598;
       position: relative;

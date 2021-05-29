@@ -1,13 +1,6 @@
 .task__board {
-}
-.createTask {
-  position: absolute;
-  bottom: -60px;
-  input {
+  .task-index {
+    margin-left: 255px;
+    font-size: 12px;
   }
-}
-.task-index {
-  right: 10px;
-  margin-top: 10px;
-  font-size: 12px;
 }

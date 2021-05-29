@@ -1,7 +1,6 @@
 .moduleTypes {
   display: flex;
   margin-left: 5px;
-  border: 1px solid transparent;
 }
 .moduleTypes__item {
   min-width: 100px;
@@ -9,6 +8,9 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
+  p {
+    color: #666;
+  }
 }
 .lmn__deadLine {
   order: 1;

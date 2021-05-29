@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useHistory } from "react-router-dom";
-import { db, timestamp } from "../../../lib/firebase";
+import { db } from "../../../lib/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { activeModulesAction } from "../../../actions";
+import { createNewTask } from "../../../functions/";
 
 //MATERIAL UI AND FRAMER
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
@@ -20,6 +21,7 @@ import "../../../styles/fn.scss";
 
 function Task({ dbName }) {
   const userInfo = useSelector((state) => state.userInfo);
+  const db_Data = useSelector((state) => state.dbData);
   const activeModules = useSelector((state) => state.activeModules);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -41,45 +43,6 @@ function Task({ dbName }) {
   const [taskColor, setTaskColor] = useState("#000");
   const [taskOpen, setTaskOpen] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const createNewTask = (e) => {
-    e.preventDefault();
-    if (currentWsId && boardId && dbName) {
-      if (inputRef.current.value !== "") {
-        db.collection("workStation")
-          .doc(currentWsId)
-          .collection("dashboard")
-          .doc(boardId)
-          .collection("task")
-          .doc("123")
-          .collection(dbName)
-          .add({
-            taskName: inputTask,
-            created: timestamp,
-            userId: userInfo.uid,
-            priority: "Normal",
-            index: currentIndex,
-          })
-          .then((data) => {
-            db.collection("workStation")
-              .doc(currentWsId)
-              .collection("dashboard")
-              .doc(boardId)
-              .collection("task")
-              .doc("123")
-              .collection(dbName)
-              .doc(data.id)
-              .set(
-                {
-                  listId: data.id,
-                },
-                { merge: true }
-              );
-          });
-        inputRef.current.value = "";
-      }
-    }
-  };
 
   useEffect(() => {
     // Get Tasks
@@ -417,14 +380,28 @@ function Task({ dbName }) {
 
           <ul className="list__newTask">
             <li>
-              <form onSubmit={(e) => createNewTask(e)}>
+              <form
+                onSubmit={(e) => (
+                  (inputRef.current.value = ""),
+                  createNewTask(
+                    e,
+                    currentWsId,
+                    boardId,
+                    dbName,
+                    inputTask,
+                    userInfo.uid
+                  )
+                )}
+              >
                 <input
                   type="text"
                   placeholder="new quick task"
                   onChange={(e) => setInputTask(e.target.value)}
                   ref={inputRef}
+                  style={{
+                    outlineColor: db_Data.colors[dbName],
+                  }}
                 />
-                <AddBoxIcon />
               </form>
             </li>
           </ul>

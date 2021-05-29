@@ -34,7 +34,7 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
   const [inputTask, setInputTask] = useState("");
   const [assignUserId, setAssignUserId] = useState("");
   const [priorityStatus, setPriorityStatus] = useState({
-    priority: "",
+    priority: "Normal",
     color: "",
   });
 
@@ -44,14 +44,16 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
       .collection("dashboard")
       .doc(boardId)
       .collection("task")
+      .doc("123")
+      .collection(newStatus)
       .add({
         taskName: inputTask,
         created: timestamp,
         userId: userInfo.uid,
+        priority: priorityStatus.priority,
         status: newStatus,
         assignedUser: assignUserId,
         deadLine: selectedDate,
-        priority: priorityStatus.priority,
       })
       .then((data) => {
         db.collection("workStation")
@@ -59,6 +61,8 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
           .collection("dashboard")
           .doc(boardId)
           .collection("task")
+          .doc("123")
+          .collection(newStatus)
           .doc(data.id)
           .set(
             {

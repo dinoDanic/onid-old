@@ -4,8 +4,8 @@
   flex-wrap: wrap;
   .column {
     flex: 1;
-    min-width: 300px;
-    max-width: 350px;
+    min-width: 250px;
+    max-width: 300px;
     margin-right: 10px;
 
     &:last-child {
@@ -28,11 +28,10 @@
     margin-bottom: -7px;
   }
   .droppable-col {
-    padding: 10px;
+    padding: 0 10px 10px 10px;
     margin-bottom: 10px;
     border-top: 0px;
     padding-top: 0;
-    position: relative;
   }
   .statusName {
     border-bottom: none;
@@ -42,6 +41,19 @@
       margin: 0;
       padding: 0;
       color: white;
+    }
+  }
+  .createTask {
+    input {
+      width: 30%;
+      box-sizing: border-box;
+      padding: 5px 10px;
+      border: none;
+      transition: 0.2s ease all;
+
+      &:focus {
+        width: 100%;
+      }
     }
   }
 }

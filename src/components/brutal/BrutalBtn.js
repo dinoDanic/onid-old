@@ -6,6 +6,9 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import PriorityHighIcon from "@material-ui/icons/PriorityHigh";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import ViewListIcon from "@material-ui/icons/ViewList";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 
 function BrutalBtn({
   color,
@@ -43,6 +46,9 @@ function BrutalBtn({
           {icon === "PriorityHighIcon" && <PriorityHighIcon />}
           {icon === "CalendarTodayIcon" && <CalendarTodayIcon />}
           {icon === "EventAvailableIcon" && <EventAvailableIcon />}
+          {icon === "DashboardIcon" && <DashboardIcon />}
+          {icon === "ViewListIcon" && <ViewListIcon />}
+          {icon === "AssignmentIcon" && <AssignmentIcon />}
         </div>
         <p style={{ fontSize: fontSize }}>{tekst}</p>
       </div>

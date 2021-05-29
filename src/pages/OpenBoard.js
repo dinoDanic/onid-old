@@ -55,10 +55,30 @@ function OpenBoard() {
         <div className="openBoard__modes">
           <div className="openBoard__L">
             <Link to={`/ws/${currentWsId}/dashboard/${boardId}/li`}>
-              <BrutalBtn tekst="List" width="80px" color={wsDataColor} />
+              <BrutalBtn
+                tekst="List"
+                width="80px"
+                color={
+                  history.location.pathname ===
+                  `/ws/${currentWsId}/dashboard/${boardId}/li`
+                    ? "#fbcb00"
+                    : ""
+                }
+                icon="ViewListIcon"
+              />
             </Link>
             <Link to={`/ws/${currentWsId}/dashboard/${boardId}/bo`}>
-              <BrutalBtn tekst="Board" width="80px" />
+              <BrutalBtn
+                tekst="Board"
+                width="80px"
+                icon="DashboardIcon"
+                color={
+                  history.location.pathname ===
+                  `/ws/${currentWsId}/dashboard/${boardId}/bo`
+                    ? "#fbcb00"
+                    : ""
+                }
+              />
             </Link>
           </div>
           {/*   <div className="openBoard__lineSep"></div> */}

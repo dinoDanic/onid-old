@@ -18,6 +18,7 @@ import User from "./components/User";
 import ListModulesMenu from "./pages/list/components/ListModulesMenu";
 import BoardList from "./pages/board_list/BoardList";
 import { AnimatePresence, motion } from "framer-motion";
+import FullTask from "./components/FullTask";
 
 function App() {
   const dispatch = useDispatch();
@@ -81,6 +82,13 @@ function App() {
                 isAuth={loginState}
               />
             </div>
+            <div className="app__fullTask">
+              <ProtectedRoute
+                path="/ws/:id/dashboard/:id/li/:id/:id"
+                component={FullTask}
+                isAuth={loginState}
+              />
+            </div>
             {settingState && (
               <div className="app__settings">
                 <ListModulesMenu />
@@ -95,9 +103,6 @@ function App() {
       <AnimatePresence>
         {loadingState && (
           <motion.div className="app__loading" exit={{ opacity: 0 }}>
-            {/* <div className="app__loadingSpin">
-              <CircularProgress />
-            </div> */}
             <motion.div
               className="app__loadingBox "
               animate={{ rotate: 380 }}

@@ -16,6 +16,7 @@ function Board({ name, boardId, color, fontColor }) {
           tekst={name}
           fontColor={fontColor}
           height="30px"
+          icon="AssignmentIcon"
         />
       </div>
     </Link>

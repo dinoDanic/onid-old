@@ -44,7 +44,7 @@ function List() {
         {db_Data &&
           db_Data.statusType?.map((data) => {
             return (
-              <div className="list__child">
+              <div className="list__child" key={data}>
                 <Task dbName={data} />
               </div>
             );
