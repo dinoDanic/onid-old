@@ -8,15 +8,15 @@
   align-items: center;
   min-width: 70px;
   height: 98vh;
-  background: $color1;
+  background: $secondary;
   padding-top: 20px;
   justify-content: space-between;
   /*   background-image: url("../img/45-degree-fabric-light.png");
   background-image: url(../img/binding-light.png);
-  background-image: url(../img/45-degree-fabric-light.png);
-  background-image: url(../img/binding-light.png);
-  background-image: url(../img/az-subtle.png); */
-  background-image: url(../img/45-degree-fabric-dark.png);
+  background-image: url(../img/45-degree-fabric-light.png); */
+  /* background-image: url(../img/binding-light.png); */
+  /* background-image: url(../img/az-subtle.png); */
+  /*   background-image: url(../img/45-degree-fabric-dark.png); */
   /*   background-image: url(../img/shattered-dark.png); */
   /*   background-image: url(../img/swirl.png); */
   /*  background-image: url(../img/blu-stripes.png); */
@@ -24,13 +24,17 @@
 
 .app__user {
   margin-bottom: 10px;
+  .MuiAvatar-root {
+    border-radius: 4px !important;
+  }
 }
 .app__board {
   width: 200px;
   min-width: 200px;
-  background: #6ca3b1;
+  /* background: #6ca3b1; */
+  background: #415761;
   padding: 20px;
-  background-image: url("../img/45-degree-fabric-light.png");
+  /*  background-image: url("../img/45-degree-fabric-light.png"); */
   /*   box-shadow: -12px 0 23px -18px; */
 }
 .app__openBoard {
@@ -57,7 +61,7 @@
 .app__loadingBox {
   width: 30px;
   height: 30px;
-  background: $color1;
+  background: $primary;
   border: 2px solid black;
 }
 .app__settings {

@@ -4,9 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { settings } from "../actions";
 import { db } from "../lib/firebase";
 import "../styles/openBoard.scss";
-import { Button } from "@material-ui/core";
 import BrutalBtn from "../components/brutal/BrutalBtn";
 import ListSettings from "./list/components/ListSettings";
+
+// Material UI
+import DnsIcon from "@material-ui/icons/Dns";
+import AppsIcon from "@material-ui/icons/Apps";
 
 function OpenBoard() {
   const wsDataColor = useSelector((state) => state.wsData.color);
@@ -55,7 +58,20 @@ function OpenBoard() {
         <div className="openBoard__modes">
           <div className="openBoard__L">
             <Link to={`/ws/${currentWsId}/dashboard/${boardId}/li`}>
-              <BrutalBtn
+              <button
+                className="retroBtn retroBtn-icon"
+                style={{
+                  background:
+                    history.location.pathname ===
+                    `/ws/${currentWsId}/dashboard/${boardId}/li`
+                      ? `${wsDataColor}`
+                      : "",
+                }}
+              >
+                <DnsIcon fontSize="small" />
+                List
+              </button>
+              {/* <BrutalBtn
                 tekst="List"
                 width="80px"
                 color={
@@ -65,10 +81,23 @@ function OpenBoard() {
                     : ""
                 }
                 icon="ViewListIcon"
-              />
+              /> */}
             </Link>
             <Link to={`/ws/${currentWsId}/dashboard/${boardId}/bo`}>
-              <BrutalBtn
+              <button
+                className="retroBtn retroBtn-icon"
+                style={{
+                  background:
+                    history.location.pathname ===
+                    `/ws/${currentWsId}/dashboard/${boardId}/bo`
+                      ? `${wsDataColor}`
+                      : "",
+                }}
+              >
+                <AppsIcon fontSize="small" />
+                Board
+              </button>
+              {/*  <BrutalBtn
                 tekst="Board"
                 width="80px"
                 icon="DashboardIcon"
@@ -78,7 +107,7 @@ function OpenBoard() {
                     ? "#fbcb00"
                     : ""
                 }
-              />
+              /> */}
             </Link>
           </div>
           {/*   <div className="openBoard__lineSep"></div> */}

@@ -21,17 +21,17 @@
   &:first-child {
     /*  box-shadow: 0 0 17px -4px black !important; */
   }
-
-  p {
-    font-size: 12px;
-    color: white;
-  }
 }
 .listItem__comp {
   min-width: 100px;
   max-width: 100px;
   height: 40px;
   margin-left: 5px;
+  p {
+    font-size: 12px;
+    color: white;
+    font-weight: 700;
+  }
 }
 .boxShadow {
   border: 1px solid black;
@@ -53,7 +53,9 @@
   .MuiAvatar-root {
     width: 40px;
     height: 40px;
-    border-radius: 0;
+    border-radius: 4px !important;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
+      rgb(0 0 0 / 6%) 0px 2px 4px -1px;
     /*   box-shadow: 2px 2px 0 0 black; */
   }
 }
@@ -135,7 +137,9 @@
   .MuiAvatar-root {
     width: 40px;
     height: 40px;
-    border-radius: 0;
+    border-radius: 4px !important;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
+      rgb(0 0 0 / 6%) 0px 2px 4px -1px;
     /*     box-shadow: 2px 2px 0 0 black; */
   }
 }
@@ -180,21 +184,19 @@
 }
 .listItem__statusMenu {
   position: absolute;
-  border: 1px solid rgb(230, 230, 230);
-  bottom: 34px;
+  bottom: 40px;
   padding: 2px;
   background: white;
-  border: 2px solid black;
   z-index: 100;
 }
 .listItem__statusItem {
-  width: 95px;
-  height: 30px;
+  width: 100px;
+  height: 40px;
   display: flex;
+  border-radius: 4px;
   justify-content: center;
   align-items: center;
   margin-bottom: 2px;
-  border: 1px solid black;
   &:last-child {
     margin-bottom: 0;
   }

@@ -9,44 +9,32 @@
   cursor: pointer;
   transition: 0.2s ease all;
   &:hover {
-    background: #35545d;
     .MuiSvgIcon-root {
-      color: white;
     }
   }
   .MuiSvgIcon-root {
-    color: #35545d;
+    color: rgba(255, 255, 255, 0.5);
     transition: 0.2s ease all;
+  }
+  button {
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 .fn__menuWindow {
   background: white;
-  padding: 15px;
   width: 170px;
   position: absolute;
   top: 30px;
   left: 0;
-  border: 1px solid black;
   z-index: 120;
-  box-shadow: 2px 2px 0 1px black;
 
   .MuiButtonBase-root {
     width: 100% !important;
-    color: $alphaBlack !important;
+    color: red;
     border-radius: 5px;
-  }
-
-  button {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 5px;
-    color: $alphaBlack;
-    &:first-child {
-      margin-top: 0;
-    }
-  }
-  p {
-    margin-left: 10px;
   }
 }
 .fn__menuWindow--layer {
@@ -73,17 +61,13 @@
 .fn__menuWindow--colorPop {
   background: white;
   left: 100%;
-  margin-left: 9px;
+  margin-left: -7px;
   width: 180px;
-  height: 140px;
   position: absolute;
-  box-shadow: 2px 2px 0 3px black;
-  margin-top: -95px;
+  margin-top: -33px;
   p {
     text-align: center;
-    margin: 14px 0 7px 0;
-    font-family: "Press Start 2P", cursive;
-    font-size: 8px;
+    margin: 0px 0 7px 0;
   }
 }
 .boxPop {

@@ -268,9 +268,13 @@ function Task({ dbName }) {
               }}
             />
           </div>
-          <div className="list__statusName" style={{ background: taskColor }}>
-            <p>{dbName}</p>
-          </div>
+          <button
+            className="retroBtn retroBtn-small2"
+            style={{ background: taskColor }}
+            onClick={() => setTaskOpen(!taskOpen)}
+          >
+            {dbName}
+          </button>
           <div className="list__statusCounter">
             <p>{counterTask} tasks</p>
           </div>

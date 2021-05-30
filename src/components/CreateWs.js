@@ -8,7 +8,7 @@ import Ws_selectColor from "./Ws_selectColor";
 function CreateWs({ setCreateWs }) {
   const userData = useSelector((state) => state.userInfo);
   const [newStation, setNewStation] = useState("");
-  const [color, setColor] = useState("#333");
+  const [color, setColor] = useState("#a358d0");
 
   const handleCreateWS = () => {
     if (userData) {
@@ -64,30 +64,28 @@ function CreateWs({ setCreateWs }) {
   return (
     <div className="createWS">
       <div className="createWS__layer" onClick={() => setCreateWs(false)}></div>
-      <div className="brutalPop__box">
+      <div className="createWS__box retroBox">
         <div className="createWS__header">
-          <h2 style={{ color: color }}>Create Work Station</h2>
+          <h2>Create Work Station</h2>
         </div>
         <div className="createWS__info">
-          <p style={{ color: color }}>
-            In Work Station you hold all your future Dashboards
-          </p>
+          <p>In Work Station you hold all your future Dashboards</p>
         </div>
         <form onSubmit={(e) => e.preventDefault()}>
           <input
-            className="brutalInput"
+            type="text"
+            className="retroInput retroInput-w100"
             placeholder="New work station"
             onChange={(e) => setNewStation(e.target.value)}
-            style={{
-              border: `2px solid ${color}`,
-              color: color,
-              boxShadow: `2px 2px 0 0 ${color}`,
-            }}
           />
           <Ws_selectColor setColor={setColor} />
-          <div className="createWs__brtlbtn" onClick={() => handleCreateWS()}>
-            <BrutalBtn tekst="Create" color={color} width="80px" />
-          </div>
+          <button
+            className="retroBtn"
+            onClick={() => handleCreateWS()}
+            style={{ background: color }}
+          >
+            Create
+          </button>
         </form>
       </div>
     </div>

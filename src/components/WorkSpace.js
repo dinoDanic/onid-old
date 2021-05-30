@@ -6,7 +6,7 @@ import { db } from "../lib/firebase";
 import "../styles/workSpace.scss";
 import WS_icon from "./WS_icon";
 import CreateWs from "../components/CreateWs";
-import Button from "./brutal/BrutalBtn";
+import AddIcon from "@material-ui/icons/Add";
 
 function WorkSpace() {
   const userInfo = useSelector((state) => state.userInfo);
@@ -67,10 +67,13 @@ function WorkSpace() {
             />
           );
         })}
-      <div className="workSpace__line"></div>
-      <div className="workSpace__addNew" onClick={() => setCreateWs(true)}>
-        <Button tekst="+" />
-      </div>
+      {/*  <div className="workSpace__line"></div> */}
+      <button
+        onClick={() => setCreateWs(true)}
+        className="retroBtn retroBtn-letter retroBtn-info"
+      >
+        <h3>+</h3>
+      </button>
       {createWs && <CreateWs setCreateWs={setCreateWs} />}
     </div>
   );

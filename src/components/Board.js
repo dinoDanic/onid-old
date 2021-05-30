@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/board.scss";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import BrutalBtn from "./brutal/BrutalBtn";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 
 function Board({ name, boardId, color, fontColor }) {
   const history = useHistory();
@@ -10,14 +10,13 @@ function Board({ name, boardId, color, fontColor }) {
   return (
     <Link to={`/ws/${pathWsId}/dashboard/${boardId}/li`}>
       <div className="board">
-        <BrutalBtn
-          color={color}
-          size="normal"
-          tekst={name}
-          fontColor={fontColor}
-          height="30px"
-          icon="AssignmentIcon"
-        />
+        <button
+          className="retroBtn retroBtn-width100 retroBtn-icon"
+          style={{ background: color }}
+        >
+          <AssignmentIcon fontSize="small" />
+          {name}
+        </button>
       </div>
     </Link>
   );

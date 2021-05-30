@@ -1,22 +1,24 @@
-import { roundToNearestMinutes } from "date-fns";
-import React, { useState } from "react";
+import { motion } from "framer-motion";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import BrutalBtn from "../components/brutal/BrutalBtn";
-import { db } from "../lib/firebase";
+import { db, timestamp } from "../lib/firebase";
 import "../styles/createBoard.scss";
 
-function CreateBoard({ setNewBoard }) {
+function CreateBoard({ setNewBoardSlide }) {
   const [newBoardName, setNewBoardName] = useState("");
   const history = useHistory();
   const currentWsId = history.location.pathname.split("/")[2];
+  const inputRef = useRef();
 
-  const createNewBoard = () => {
+  const createNewBoard = (e) => {
+    e.preventDefault();
     if (currentWsId && newBoardName !== "") {
       db.collection("workStation")
         .doc(currentWsId)
         .collection("dashboard")
         .add({
           name: newBoardName,
+          timestamp: timestamp,
           activeModules: [
             "Created By",
             "Status",
@@ -101,54 +103,56 @@ function CreateBoard({ setNewBoard }) {
           createAllModules("Created Date", 4);
           createAllModules("Deadline", 5);
 
-          /* //SET DEFAULT TASK => TO DO, STUCK, DONE
-          const createDefaultTasks = (name) => {
-            db.collection("workStation")
-              .doc(currentWsId)
-              .collection("dashboard")
-              .doc(docData.id)
-              .collection("task")
-              .doc("123")
-              .collection(name)
-              .add({});
-          };
-          createDefaultTasks("to do");
-          createDefaultTasks("stuck");
-          createDefaultTasks("done"); */
           // end
-          setNewBoard(false);
+          setNewBoardSlide(false);
+          history.push(`/ws/${currentWsId}/dashboard/${docData.id}/li`);
         });
     }
   };
 
   return (
     <>
-      <div className="brutalPop">
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -10, opacity: 0 }}
+      >
+        <form onSubmit={(e) => createNewBoard(e)}>
+          <input
+            className="retroInput retroInput-w100"
+            placeholder="New board"
+            spellCheck="false"
+            onChange={(e) => setNewBoardName(e.target.value)}
+            ref={inputRef}
+          ></input>
+        </form>
+      </motion.div>
+      {/* <div className="retroPop">
         <div
-          className="brutalPop__layer"
+          className="retroPop-layer"
           onClick={() => setNewBoard(false)}
         ></div>
-        <div className="brutalPop__box">
+        <div className="retroPop__box">
           <div className="createBoard__header">
-            <h2>Create Board</h2>
+            <h3>Create Board</h3>
           </div>
           <div className="createBoard__info"></div>
           <form onSubmit={(e) => e.preventDefault()}>
             <input
               type="text"
-              className="brutalInput"
+              className="retroInput retroInput-w100"
               placeholder="Board Name"
               onChange={(e) => setNewBoardName(e.target.value)}
             />
-            <div
-              className="createBoard__brutalBrn"
+            <button
               onClick={() => createNewBoard()}
+              className="retroBtn retroBtn-info"
             >
-              <BrutalBtn tekst="Create" width="80px" />
-            </div>
+              Create
+            </button>
           </form>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

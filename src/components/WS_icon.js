@@ -16,14 +16,13 @@ function WS_icon({ name, id, mainWsLink, color }) {
   }, [mainWsLink, id]);
   return (
     <Link to={`/ws/${id}`}>
-      <div className="ws_icon-burtalBtn">
-        <BrutalBtn
-          color={color}
-          tekst={name.charAt(0)}
-          width="30px"
-          height="30px"
-          customClass="ws_icon_btn"
-        />
+      <div className="ws_icon">
+        <button
+          className="retroBtn retroBtn-letter"
+          style={{ background: color }}
+        >
+          {name.charAt(0)}
+        </button>
         {star && <div className="ws_icon__star"></div>}
       </div>
     </Link>

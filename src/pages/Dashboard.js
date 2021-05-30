@@ -3,13 +3,19 @@ import { db } from "../lib/firebase";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@material-ui/core";
-import BrutalBtn from "../components/brutal/BrutalBtn";
-import "../styles/dashboard.scss";
 import { wsDataAction, membersWs } from "../actions";
+
+//STYLE
+import "../styles/dashboard.scss";
+import "../styles/retro.scss";
 
 //MATERIAL UI AND FRAMER
 import { AnimatePresence, motion } from "framer-motion";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import EditIcon from "@material-ui/icons/Edit";
+import HomeIcon from "@material-ui/icons/Home";
+import ColorizeIcon from "@material-ui/icons/Colorize";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 //COMPONENTS
 import Board from "../components/Board";
@@ -27,6 +33,7 @@ function Dashboard() {
   const boardId = history.location.pathname.split("/")[4];
   const [boardData, setBoardData] = useState();
   const [newBoard, setNewBoard] = useState(false);
+  const [newBoardSlide, setNewBoardSlide] = useState(false);
   const [displayMenu, setDisplayMenu] = useState(false);
   const [askDelete, setAskDelete] = useState(false);
   const [deleteMainWs, setDeleteMainWs] = useState(false);
@@ -126,6 +133,7 @@ function Dashboard() {
       db.collection("workStation")
         .doc(pathWsId)
         .collection("dashboard")
+        .orderBy("timestamp", "asc")
         .onSnapshot((data) => {
           let list = [];
           data.forEach((data) => {
@@ -170,12 +178,12 @@ function Dashboard() {
           <>
             <div className="dashboard__header">
               <Link to={`/ws/${pathWsId}`}>
-                <BrutalBtn
-                  tekst={wsData.ws_name.charAt(0)}
-                  color={color}
-                  width="30px"
-                  height="30px"
-                />
+                <button
+                  className="retroBtn retroBtn-letter"
+                  style={{ background: color }}
+                >
+                  {wsData.ws_name.charAt(0)}
+                </button>
               </Link>
               <div className="dashboard__name">
                 {!changeName && <h3>{wsData.ws_name}</h3>}
@@ -191,7 +199,7 @@ function Dashboard() {
                   </h3>
                 )}
               </div>
-              <div className="fn__menu ">
+              <div className="fn__menu">
                 <MoreVertIcon onClick={() => handleMenuLayer()} />
                 <AnimatePresence>
                   {displayMenu && (
@@ -201,50 +209,52 @@ function Dashboard() {
                         onClick={() => handleMenuLayer()}
                       ></div>
                       <motion.div
-                        className="fn__menuWindow "
+                        className="fn__menuWindow retroBox"
                         exit={{ opacity: 0 }}
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ y: 0, opacity: 1 }}
                       >
-                        <div
+                        <button
                           onClick={() => handleEditName()}
-                          className="fn__menuWindows-brutalBtn"
+                          className="retroBtn retroBtn-small retroBtn-width100 retroBtn-icon"
                         >
-                          <BrutalBtn tekst="Edit Name" height="20px" />
-                        </div>
-                        <div
+                          <EditIcon fontSize="small" />
+                          Edit name
+                        </button>
+                        <button
                           onClick={() => setAsMainWs()}
-                          className="fn__menuWindows-brutalBtn"
+                          className="retroBtn retroBtn-small retroBtn-width100 retroBtn-icon"
                         >
-                          <BrutalBtn tekst="Set as Main" height="20px" />
-                        </div>
-                        <div
+                          <HomeIcon fontSize="small" />
+                          Set as main
+                        </button>
+
+                        <button
                           onClick={() => setChangeColorState(!changeColorState)}
-                          className="fn__menuWindows-brutalBtn"
+                          className="retroBtn retroBtn-small retroBtn-width100 retroBtn-icon"
                         >
-                          <BrutalBtn tekst="Change color" height="20px" />
-                          {changeColorState && (
-                            <motion.div
-                              className="fn__menuWindow--colorPop"
-                              exit={{ opacity: 0 }}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ x: 0, opacity: 1 }}
-                            >
-                              <p>Select new Color</p>
-                              <Dashboard__selectColor pathWsId={pathWsId} />
-                            </motion.div>
-                          )}
-                        </div>
-                        <div
+                          <ColorizeIcon fontSize="small" />
+                          Change color
+                        </button>
+                        {changeColorState && (
+                          <motion.div
+                            className="fn__menuWindow--colorPop retroBox retroBox-small"
+                            exit={{ opacity: 0 }}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ x: 0, opacity: 1 }}
+                          >
+                            <p>Select new Color</p>
+                            <Dashboard__selectColor pathWsId={pathWsId} />
+                          </motion.div>
+                        )}
+
+                        <button
                           onClick={() => handleDeleteButton()}
-                          className="fn__menuWindows-brutalBtn"
+                          className="retroBtn retroBtn-small retroBtn-width100 retroBtn-danger retroBtn-icon"
                         >
-                          <BrutalBtn
-                            tekst="Delete"
-                            height="20px"
-                            color="tomato"
-                          />
-                        </div>
+                          <DeleteIcon fontSize="small" />
+                          Delete
+                        </button>
                       </motion.div>
                     </>
                   )}
@@ -274,17 +284,19 @@ function Dashboard() {
                 )}
               </div>
             </div>
-            <div
-              className="dashboard__newBoard"
-              onClick={() => setNewBoard(true)}
-            >
+            <div className="dashboard__newBoard">
               {/* <Button onClick={() => setNewBoard(true)}>
                 <AddCircleOutlineIcon fontSize="small" /> Add new board
               </Button> */}
-              <BrutalBtn tekst="Add new board" />
+              <button
+                onClick={() => setNewBoardSlide(!newBoardSlide)}
+                className="retroBtn retroBtn-width100 retroBtn-info"
+              >
+                Add new board
+              </button>
             </div>
 
-            <div className="dashboard__dashboards">
+            <motion.div className="dashboard__dashboards">
               {boardData &&
                 boardData.map((data) => {
                   return (
@@ -293,13 +305,18 @@ function Dashboard() {
                       id={data.id}
                       name={data.name}
                       boardId={data.id}
-                      color={boardId === data.id ? color : "rgb(131 161 171)"}
+                      color={boardId === data.id ? color : "#26a69a"}
                       fontColor={boardId === data.id ? "" : "white"}
                     />
                   );
                 })}
-            </div>
-            {newBoard && <CreateBoard setNewBoard={setNewBoard} />}
+            </motion.div>
+            <AnimatePresence>
+              {newBoardSlide && (
+                <CreateBoard setNewBoardSlide={setNewBoardSlide} />
+              )}
+            </AnimatePresence>
+            {/*   {newBoard && <CreateBoard setNewBoard={setNewBoard} />} */}
             {deleteMainWs && (
               <Warning message={"You can't delete you main work station"} />
             )}

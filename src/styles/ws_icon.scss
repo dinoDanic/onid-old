@@ -15,12 +15,11 @@
 }
 .ws_icon__star {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: -3px;
+  right: -3px;
   z-index: 100;
   background: #ffb961;
   transform: rotate(45deg);
-  border: 1px solid black;
 
   width: 8px;
   height: 8px;
@@ -45,7 +44,4 @@
     font-size: 10px;
     z-index: 200;
   }
-}
-.ws_icon-burtalBtn {
-  position: relative;
 }

@@ -74,11 +74,6 @@ function Ws_selectColor({ setColor }) {
         className="colorPicker__color14"
         onClick={(e) => setColor(e.target.value)}
       />
-      <input
-        value="#f5642e"
-        className="colorPicker__color16"
-        onClick={(e) => setColor(e.target.value)}
-      />
     </div>
   );
 }

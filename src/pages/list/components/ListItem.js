@@ -344,7 +344,7 @@ function ListItem({
         <div className="listItem__fn">
           {createdBy && (
             <div
-              className="listItem__createdBy listItem__comp"
+              className="listItem__createdBy listItem__comp "
               name="Created By"
               style={{ order: createdByOrder }}
             >
@@ -353,7 +353,7 @@ function ListItem({
           )}
           {createdAt && (
             <div
-              className="listItem__createdAt listItem__comp "
+              className="listItem__createdAt listItem__comp retroLabel"
               name="Created Date"
               style={{ order: createdDateOrder }}
             >
@@ -362,10 +362,11 @@ function ListItem({
           )}
           {deadLineState && (
             <>
-              <div
-                className="listItem__deadLine listItem__comp "
+              <motion.div
+                className="listItem__deadLine listItem__comp retroLabel "
                 name="Deadline"
                 style={{ order: deadlineOrder }}
+                whileHover={{ scale: 1.05 }}
               >
                 <div className="listItem__showDeadDate">
                   <p>{getDeadlineDate()}</p>
@@ -396,11 +397,11 @@ function ListItem({
                 >
                   <p>{daysLeftCounter}</p>
                 </div>
-              </div>
+              </motion.div>
             </>
           )}
           {assignState && (
-            <div
+            <motion.div
               className="listItem__comp listItem__assign"
               name="Assign"
               style={{ order: assignOrder }}
@@ -441,12 +442,12 @@ function ListItem({
                   </>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           )}
           {statusState && (
             <>
               <div
-                className="listItem__comp listItem__status "
+                className="listItem__comp listItem__status retroLabel"
                 name="Status"
                 style={{ order: statusOrder, background: statusBg }}
                 onClick={() => setStatusMenuState(!statusMenuState)}
@@ -468,7 +469,7 @@ function ListItem({
                           statusType.map((name) => {
                             return (
                               <motion.div
-                                className="listItem__statusItem"
+                                className="listItem__statusItem retroLabel"
                                 style={{ background: allColors[name] }}
                                 onClick={() => changeStatus(name)}
                                 whileHover={{ scale: 1.03 }}
@@ -488,7 +489,7 @@ function ListItem({
           {priorityState && (
             <>
               <div
-                className="listItem__comp  listItem__priority"
+                className="listItem__comp listItem__priority "
                 name="Priority"
                 style={{
                   order: priorityOrder,
@@ -533,7 +534,7 @@ function ListItem({
                   )}
                 </AnimatePresence>
                 <div
-                  className="listItem__priorityBox"
+                  className="listItem__priorityBox retroLabel"
                   style={{ background: bgPriority }}
                   onClick={() => setPriorityMenuState(!priorityMenuState)}
                 >

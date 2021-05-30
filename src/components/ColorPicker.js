@@ -97,11 +97,6 @@ function ColorPicker({ name }) {
         className="colorPicker__color14"
         onClick={(e) => setColor(e)}
       />
-      <input
-        value="#f5642e"
-        className="colorPicker__color16"
-        onClick={(e) => setColor(e)}
-      />
     </div>
   );
 }
