@@ -18,9 +18,6 @@
 .listItem__fn {
   display: flex;
   align-items: center;
-  &:first-child {
-    /*  box-shadow: 0 0 17px -4px black !important; */
-  }
 }
 .listItem__comp {
   min-width: 100px;
@@ -44,19 +41,14 @@
   justify-content: center;
   display: flex;
   align-items: center;
-  /* box-shadow: 0 0 17px -4px black !important; */
 }
 .listItem__createdBy {
   display: flex;
   align-items: center;
   justify-content: center;
   .MuiAvatar-root {
-    width: 40px;
-    height: 40px;
-    border-radius: 4px !important;
-    box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
-      rgb(0 0 0 / 6%) 0px 2px 4px -1px;
-    /*   box-shadow: 2px 2px 0 0 black; */
+    width: 35px;
+    height: 35px;
   }
 }
 .listItem__deadLine {
@@ -117,7 +109,8 @@
   right: 0;
   position: absolute;
   height: 50px;
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 4px 4px 0;
+  box-shadow: inset 0px -8px 0 0 rgba(0, 0, 0, 0.3);
   p {
     font-size: 11px;
   }
@@ -126,41 +119,58 @@
   display: flex;
 }
 
+.listItem__assignAvatar {
+  cursor: pointer;
+  .MuiAvatar-root {
+    width: 35px;
+    height: 35px;
+  }
+}
+.listItem__popBox {
+  position: absolute;
+  bottom: 36px;
+  background: white;
+  padding: 5px;
+  left: -5px;
+  z-index: 100;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
+    rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+  p {
+    color: white;
+    font-weight: normal;
+  }
+}
 .listItem__assign {
   display: flex;
   position: relative;
   align-items: center;
   justify-content: center;
-}
-.listItem__assignAvatar {
-  cursor: pointer;
-  .MuiAvatar-root {
-    width: 40px;
-    height: 40px;
-    border-radius: 4px !important;
-    box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
-      rgb(0 0 0 / 6%) 0px 2px 4px -1px;
-    /*     box-shadow: 2px 2px 0 0 black; */
-  }
-}
-.listItem__chooseUser {
-  position: absolute;
-  border: 2px solid black;
-  bottom: 36px;
-  background: white;
-  padding: 3px;
-  z-index: 100;
   p {
-    color: black;
-    margin-left: 10px;
+    color: #333 !important;
+  }
+  .listItem__popBox {
+    left: -10px;
+  }
+  .listItem__popBoxInside {
+    justify-content: flex-start;
+    padding: 0 5px;
+    p {
+      margin-left: 5px;
+    }
   }
 }
-.listItem__chooseUserInside {
+.listItem__popBoxInside {
   display: flex;
   cursor: pointer;
+  height: 40px;
+  width: 100px;
   align-items: center;
-  margin-bottom: 10px;
-  padding: 5px 10px;
+  margin-bottom: 2px;
+  border-radius: 4px;
+  color: white;
+  justify-content: center;
   &:last-child {
     margin-bottom: 0px;
   }
@@ -184,9 +194,13 @@
 }
 .listItem__statusMenu {
   position: absolute;
-  bottom: 40px;
-  padding: 2px;
+  bottom: 36px;
+  padding: 5px;
   background: white;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
+    rgb(0 0 0 / 6%) 0px 2px 4px -1px;
   z-index: 100;
 }
 .listItem__statusItem {
@@ -204,6 +218,10 @@
 .listItem__priority {
   position: relative;
   cursor: pointer;
+}
+.listItem__priorityItem {
+  height: 40px;
+  width: 100px;
 }
 
 .listItem__priorityBox {
@@ -237,5 +255,19 @@
   }
   &:last-child {
     margin-bottom: 0;
+  }
+}
+.listItem__arrow {
+  bottom: -12px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  .MuiSvgIcon-root {
+    /*  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
+      rgb(0 0 0 / 6%) 0px 2px 4px -1px !important;
+    background: white; */
+    /* border-radius: 100%; */
   }
 }

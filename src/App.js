@@ -104,12 +104,12 @@ function App() {
         {loadingState && (
           <motion.div className="app__loading" exit={{ opacity: 0 }}>
             <motion.div
-              className="app__loadingBox "
+              className="app__loadingBox"
               animate={{ rotate: 380 }}
               transition={{
                 repeat: Infinity,
                 repeatType: "reverse",
-                duration: 0.5,
+                duration: 0.8,
               }}
             ></motion.div>
           </motion.div>

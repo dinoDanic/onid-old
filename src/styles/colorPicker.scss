@@ -3,19 +3,19 @@
   width: 130px;
   flex-wrap: wrap;
   background: white;
-  padding: 10px;
-  border: 2px solid black;
   input {
-    width: 20px;
+    width: 30px;
     height: 20px;
     border: 1px solid black;
     margin: 3px;
+    border-radius: 4px;
     flex-flow: wrap;
     border: none;
     cursor: pointer;
     padding: 0;
     color: transparent;
-
+    flex-grow: 1;
+    transition: 0.2s ease all;
     &:hover {
       transform: scale(1.2);
     }

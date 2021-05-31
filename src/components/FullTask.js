@@ -108,7 +108,8 @@ function FullTask() {
         <div className="fullTask__update">
           <form onSubmit={(e) => createUpdate(e)}>
             <input
-              className="brutalInput"
+              spellCheck="false"
+              className="retroInput retroInput-w100"
               type="text"
               placeholder="Got update?"
               onChange={(e) => setUpdateInput(e.target.value)}

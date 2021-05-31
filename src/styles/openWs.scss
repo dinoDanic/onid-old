@@ -18,6 +18,13 @@
   display: flex;
   align-items: center;
 }
+.openWs__icon {
+  button {
+    width: 80px;
+    height: 80px;
+    font-size: 30px;
+  }
+}
 .openWs__name {
   margin-left: 15px;
   margin-top: 30px;
@@ -29,6 +36,14 @@
 .openWs__menu .MuiTab-root {
   background: white;
 }
+.openWs__menu2 {
+  display: flex;
+  padding: 20px 80px;
+  button {
+    margin-right: 10px;
+  }
+}
+
 .openWs__menu {
   padding: 0 80px;
   .MuiAppBar-positionFixed {
@@ -69,23 +84,19 @@
   }
 }
 
-.openWs__content {
-  padding: 10px 0px;
-}
-
 .openWs__user {
   display: flex;
   position: relative;
   align-items: center;
   margin-bottom: 10px;
-  border: 1px solid black;
   padding: 10px;
-  width: 300px;
+  border-radius: 6px;
   background: #f5f5f5;
   &:hover {
   }
   p {
     font-weight: 700;
+    color: #333;
   }
 }
 .openWs__alfa {
@@ -93,6 +104,7 @@
   right: 10px;
   background: red;
   padding: 3px 6px;
+  border-radius: 4px;
   p {
     font-size: 10px;
     font-weight: 700;
@@ -104,13 +116,8 @@
   margin-right: 10px;
 }
 .openWs__addNewUser {
-  margin-top: 20px;
+  margin-top: 10px;
   button {
-    background: #eee;
-    svg {
-      color: #777;
-      margin-right: 5px;
-    }
     p {
       color: #777;
     }
@@ -155,22 +162,40 @@
 }
 .openWs__addMemberError {
   margin: 20px 0;
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
   p {
-    color: tomato;
+    color: $danger;
     font-weight: 500;
     text-align: left;
   }
 }
 .openWs__baordHolder {
+}
+.openWs__content {
+  padding: 0 80px;
   display: flex;
 }
-.openWs__boards {
+.openWs__board {
+  background: $secondary2;
+  width: fit-content;
+  height: fit-content;
+  min-height: 280px;
+  color: white;
+  margin-right: 20px;
+  padding: 10px 30px;
+  border-radius: 6px;
   width: 300px;
-  display: flex;
+}
+.openWs__boards {
   align-items: center;
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 10px;
+  button {
+    height: 40px;
+  }
   .MuiButton-text {
     padding: 0 10px;
   }
@@ -186,8 +211,6 @@
     justify-content: start;
   }
   .MuiSvgIcon-root {
-    margin-top: 7px;
-    color: #666;
   }
   .icon {
     margin-right: 10px;

@@ -60,11 +60,14 @@ function List() {
           />
         )}
       </AnimatePresence>
-      <div
-        className="list__createTask"
-        onClick={() => setTaskWindow(!taskWindow)}
-      >
-        <BrutalBtn tekst="+ Task" width="80px" color={wsDataColor} />
+      <div className="list__createTask">
+        <button
+          onClick={() => setTaskWindow(!taskWindow)}
+          className="retroBtn"
+          style={{ background: wsDataColor }}
+        >
+          Add task
+        </button>
       </div>
     </>
   );

@@ -13,6 +13,7 @@
     align-items: center;
     margin-bottom: 5px;
     position: relative;
+    height: 40px;
     &:last-child {
       margin-bottom: 0;
     }
@@ -66,8 +67,8 @@
       width: 100px;
 
       .MuiAvatar-root {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         margin-left: 3px;
         box-shadow: none;
       }

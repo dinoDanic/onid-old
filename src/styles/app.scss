@@ -57,12 +57,13 @@
   left: 0;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(3px);
 }
 .app__loadingBox {
   width: 30px;
   height: 30px;
   background: $primary;
-  border: 2px solid black;
+  border-radius: 4px;
 }
 .app__settings {
   border-left: 1px solid #eee;

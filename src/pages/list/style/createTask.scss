@@ -1,20 +1,19 @@
+@import "../../../styles/theme.scss";
 .createTask {
 }
 .createTask__window {
   position: fixed;
-  background: white;
+  background: $secondary2;
   bottom: 50px;
   right: 30px;
   width: 360px;
   min-height: 400px;
-  border: 2px solid black;
   padding: 20px;
   padding-bottom: 80px;
   /*   background-image: url(../../../img/binding-light.png);
   background-image: url(../../../img/45-degree-fabric-light.png);
    background-image: url(../../../img/binding-light.png);
   background-image: url(../../../img/az-subtle.png); */
-  background-image: url(../../../img/blu-stripes.png);
 
   .MuiFormControl-root {
     width: 100%;
@@ -29,39 +28,51 @@
   }
 }
 .createTask__status {
-  padding: 0px 10px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
   cursor: pointer;
-  border: 1px solid black;
-  box-shadow: 2px 2px 0 0 black;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 80px;
+  min-width: 80px;
+  border-radius: 4px;
+  box-shadow: inset 0px -4px 0 0 rgba(0, 0, 0, 0.3);
+  transition: 0.2s ease all;
+  &:hover {
+    box-shadow: inset 0px -6px 0 0 rgba(0, 0, 0, 0.3);
+    /* padding-top: 4px; */
+  }
+  &:active {
+    box-shadow: inset 0px 4px 0 0 rgba(0, 0, 0, 0.3);
+    /* padding-top: 6px; */
+    color: rgba(255, 255, 255, 0.5);
+  }
   p {
     color: white;
-    font-weight: 600;
     font-size: 12px;
+    font-weight: 800;
+    padding: 5px 20px;
   }
 }
 .createTask__chooseStatus {
   position: absolute;
   background: white;
-  border: 1px solid black;
-  box-shadow: 2px 2px 0 black;
   padding: 5px;
   left: -4px;
   top: -10px;
   z-index: 100;
   p {
     color: #333;
-    border: 1px solid black;
+    border-radius: 4px;
     padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 20px;
     font-size: 12px;
     color: white;
     font-weight: 600;
     margin-bottom: 3px;
+    box-shadow: inset 0px -2px 0 0 rgba(0, 0, 0, 0.3);
     &:last-child {
       margin-bottom: 0;
     }
@@ -74,6 +85,7 @@
   align-items: center;
   .list__createTask-p {
     margin-right: 10px;
+    color: white;
   }
   p {
     font-size: 12px;
@@ -87,9 +99,6 @@
   .MuiAvatar-root {
     width: 30px;
     height: 30px;
-    border-radius: 0;
-    box-shadow: 2px 2px 0 0 black;
-    border: 1px solid black;
   }
 }
 .createTask__add {
@@ -99,16 +108,13 @@
     right: -5px;
     width: 15px;
     height: 15px;
-    border-radius: 0;
+    border-radius: 4px;
     color: white;
   }
 }
 .createTask__popUsers {
   position: absolute;
-  background: #f5f5f5;
   padding: 5px;
-  box-shadow: 2px 2px 0 0 black;
-  border: 1px solid black;
   z-index: 150;
 }
 .createTask__popAvatar {
@@ -130,7 +136,6 @@
 .createTask__addComment {
   margin-top: 20px;
   textarea {
-    border: 1px solid black;
     max-width: 100%;
     min-width: 30%;
     max-height: 200px;
@@ -139,7 +144,7 @@
     outline: none;
     padding: 10px;
     box-sizing: border-box;
-    box-shadow: 2px 2px 0 0 black;
+    font-family: Arial, Helvetica, sans-serif;
   }
 }
 .createTask__buttonCreate {
@@ -162,7 +167,12 @@
   margin-top: 10px;
   display: flex;
   flex-direction: column;
-
+  button {
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
   input {
     font-size: 12px;
   }
@@ -183,11 +193,8 @@
   bottom: 20px;
   display: flex;
   left: 20px;
-  .MuiButtonBase-root {
-    margin-right: 8px;
-  }
-  .MuiFab-root {
-    box-shadow: none;
+  button {
+    margin-right: 5px;
   }
 }
 .createTask__fabDate {
@@ -219,7 +226,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-
+  border-radius: 6px;
   &:last-child {
     margin-bottom: 0;
   }

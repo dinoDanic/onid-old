@@ -10,6 +10,8 @@ import ListSettings from "./list/components/ListSettings";
 // Material UI
 import DnsIcon from "@material-ui/icons/Dns";
 import AppsIcon from "@material-ui/icons/Apps";
+import SettingsIcon from "@material-ui/icons/Settings";
+import MenuOpenIcon from "@material-ui/icons/MenuOpen";
 
 function OpenBoard() {
   const wsDataColor = useSelector((state) => state.wsData.color);
@@ -116,13 +118,17 @@ function OpenBoard() {
               className="openBoard__btnSet"
               onClick={() => setListSettingsStatus(!ListSettingsStatus)}
             >
-              <BrutalBtn icon="SettingsIcon" />
+              <button className="retroBtn retroBtn-letter">
+                <SettingsIcon fontSize="small" />
+              </button>
             </div>
             <div
               className="openBoard__btnMdls"
               onClick={() => dispatch(settings(!settingState))}
             >
-              <BrutalBtn icon="MenuOpenIcon" />
+              <button className="retroBtn retroBtn-letter">
+                <MenuOpenIcon fontSize="small" />
+              </button>
             </div>
           </div>
         </div>

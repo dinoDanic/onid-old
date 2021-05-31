@@ -75,7 +75,7 @@ function CreateWs({ setCreateWs }) {
           <input
             type="text"
             className="retroInput retroInput-w100"
-            placeholder="New work station"
+            placeholder="Main station, School, work, etc.."
             onChange={(e) => setNewStation(e.target.value)}
           />
           <Ws_selectColor setColor={setColor} />

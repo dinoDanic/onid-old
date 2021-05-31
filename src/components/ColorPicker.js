@@ -25,7 +25,7 @@ function ColorPicker({ name }) {
       });
   };
   return (
-    <div className="colorPicker boxShadow">
+    <div className="colorPicker retroBox">
       <p>Pick color</p>
       <input
         value="#D059D0"

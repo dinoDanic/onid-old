@@ -67,30 +67,30 @@ function FullTaskMsg({ input, currentWsId, boardId, docId, updatedBy }) {
     setmaxH("100%");
   };
   return (
-    <div className="fullTask__msg brutalBox" /* style={{ maxHeight: maxH }} */>
+    <div className="fullTask__msg retroBox">
       <div className="fullTask__msgFrom">
         <Avatar src={updatedBy?.userPhoto} />
-        <p>{updatedBy?.userName}</p>
+        <h4>{updatedBy?.userName}</h4>
       </div>
       <div className="fullTask__msgMsg">
         <p>{input}</p>
       </div>
       <div className="fullTask__like">
-        <BrutalBtn tekst="Like" height="20px" width="100px" fontSize="7px" />
-        <div onClick={() => handleReplyBtn()}>
-          <BrutalBtn
-            tekst="Reaply"
-            width="100px"
-            fontSize="7px"
-            height="20px"
-          />
+        <button className="retroBtn retroBtn-small2">Like</button>
+        <button
+          onClick={() => handleReplyBtn()}
+          className="retroBtn retroBtn-small2"
+        >
+          Reply
+        </button>
+      </div>
+      {replyData.length > 0 && (
+        <div className="fullTask__showReplays">
+          {replyData?.map((data) => {
+            return <Reply input={data.input} userId={data.replayById} />;
+          })}
         </div>
-      </div>
-      <div className="fullTask__showReplays">
-        {replyData?.map((data) => {
-          return <Reply input={data.input} userId={data.replayById} />;
-        })}
-      </div>
+      )}
       {replayTaskState && (
         <div className="fullTask__replay">
           <form onSubmit={(e) => handleReplay(e)}>
@@ -102,7 +102,7 @@ function FullTaskMsg({ input, currentWsId, boardId, docId, updatedBy }) {
             )}
             <input
               type="text"
-              className="brutalInput"
+              className="retroInput retroInput-w100 "
               placeholder="Reply.."
               onChange={(e) => setReplayInput(e.target.value)}
               ref={inputRef}

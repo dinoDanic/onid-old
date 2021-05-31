@@ -6,7 +6,8 @@ body {
   padding: 0 !important;
   margin: 0 !important;
   /* font-family: "Roboto Mono", monospace; */
-  font-family: sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-family: "Nunito", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
@@ -30,9 +31,9 @@ a {
 }
 .MuiAvatar-root,
 .MuiAvatar-circle {
-  border-radius: 0 !important;
-  /*   box-shadow: 2px 2px 0 0 black;
-  border-radius: 1px solid black; */
+  border-radius: 4px !important;
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px,
+    rgb(0 0 0 / 6%) 0px 2px 4px -1px !important;
 }
 p {
   padding: 0;
@@ -61,25 +62,9 @@ h1 {
 ::-webkit-scrollbar-thumb {
 }
 
-.MuiPickersDay-daySelected {
-  border-radius: 0;
-}
-.MuiPopover-paper {
-  border: 2px solid black;
-  border-radius: 0 !important;
-}
-.MuiPickersDay-daySelected {
-  border-radius: 0 !important;
-}
-.MuiSwitch-thumb {
-  border-radius: 0 !important;
-}
-.MuiSwitch-track {
-  border-radius: 0 !important;
-}
 .MuiSwitch-colorPrimary.Mui-checked {
-  color: #28677a !important;
+  /*   color: #28677a !important; */
 }
 .MuiSwitch-switchBase {
-  color: #abc8cf !important;
+  /*   color: #abc8cf !important; */
 }

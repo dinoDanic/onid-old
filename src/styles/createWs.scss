@@ -36,4 +36,9 @@
 }
 .createWS__info {
   margin-top: 5px;
+  p {
+    &:last-child {
+      color: #888;
+    }
+  }
 }

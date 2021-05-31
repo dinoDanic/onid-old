@@ -17,6 +17,9 @@ import { Avatar, Grid } from "@material-ui/core";
 import { motion } from "framer-motion";
 import AddIcon from "@material-ui/icons/Add";
 import PriorityHighIcon from "@material-ui/icons/PriorityHigh";
+import CloseIcon from "@material-ui/icons/Close";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 
 function CreateTask({ setTaskWindow, boardId, currentWsId }) {
   const userInfo = useSelector((state) => state.userInfo);
@@ -39,6 +42,10 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
   });
 
   const CreateSuperTask = () => {
+    if (inputTask === "") {
+      alert("task empty");
+      return;
+    }
     db.collection("workStation")
       .doc(currentWsId)
       .collection("dashboard")
@@ -126,7 +133,7 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
 
   return (
     <motion.div
-      className="createTask__window"
+      className="createTask__window retroBox"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 30 }}
@@ -143,7 +150,7 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
                 className="layer"
                 onClick={() => setOpenChooseStatus(!openChooseStatus)}
               ></div>
-              <div className="createTask__chooseStatus">
+              <div className="createTask__chooseStatus retroBox">
                 {db_Data?.statusType.map((data) => {
                   return (
                     <motion.p
@@ -163,13 +170,15 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
         </div>
         <input
           type="text"
-          className="brutalInput "
+          className="retroInput retroInput-w100 "
           placeholder="Type task.."
           spellcheck="false"
           onChange={(e) => setInputTask(e.target.value)}
         />
         <div className="createTask__close" onClick={() => setTaskWindow(false)}>
-          <BrutalBtn tekst="X" />
+          <button className="retroBtn retroBtn-letter">
+            <CloseIcon fontSize="small" />
+          </button>
         </div>
       </div>
       <div className="createTask__ass">
@@ -188,7 +197,7 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
                 className="layer"
                 onClick={() => setPopMembers(!popMembers)}
               ></div>
-              <div className="createTask__popUsers">
+              <div className="createTask__popUsers retroBox">
                 {members_ws?.map((member) => {
                   return (
                     <motion.div
@@ -210,15 +219,19 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
             </>
           )}
         </div>
-        <p>?</p>
+        <p style={{ color: "white" }}>?</p>
       </div>
       <div className="createTask__addComment">
-        <textarea placeholder="Add Comment.." spellcheck="false" />
+        <textarea
+          className="retroBox"
+          placeholder="Add Comment.."
+          spellcheck="false"
+        />
       </div>
       <div className="createTask__optionsMenu">
         <>
           {deadlineState && (
-            <motion.div className="createTask__options brutalBox">
+            <motion.div className="createTask__options retroBox">
               <motion.div
                 className="createTask__optionsPop"
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -243,28 +256,38 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
                     />
                   </Grid>
                 </MuiPickersUtilsProvider>
-                <div onClick={() => setIconDate(selectedDate)}>
-                  <BrutalBtn tekst="Set Date" height="25px" />
-                </div>
-                <div onClick={() => clearDate()}>
-                  <BrutalBtn tekst="Clear Date" color="tomato" height="25px" />
-                </div>
+
+                <button
+                  onClick={() => setIconDate(selectedDate)}
+                  className="retroBtn retroBtn-small2 retroBtn-width100"
+                >
+                  set date
+                </button>
+
+                <button
+                  onClick={() => clearDate()}
+                  className="retroBtn retroBtn-danger retroBtn-small2 retroBtn-width100"
+                >
+                  clear date
+                </button>
               </motion.div>
             </motion.div>
           )}
-          <div onClick={() => handleDeadlineBtn()}>
-            <BrutalBtn
-              width="35px"
-              height="35px"
-              icon={!deadlineDate ? "CalendarTodayIcon" : "EventAvailableIcon"}
-              fontSize="7px"
-              customClass="createTask__brutalBtn"
-            />
-          </div>
+
+          <button
+            onClick={() => handleDeadlineBtn()}
+            className="retroBtn retroBtn-letter"
+          >
+            {deadlineDate ? (
+              <EventAvailableIcon fontSize="small" />
+            ) : (
+              <CalendarTodayIcon fontSize="small" />
+            )}
+          </button>
 
           <div className="createTask__priority">
             {priorityPopState && (
-              <div className="createTask__priorityPop brutalBox">
+              <div className="createTask__priorityPop retroBox">
                 {db_Data?.priority?.map((data) => {
                   console.log(data);
                   return (
@@ -283,14 +306,13 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
                 })}
               </div>
             )}
-            <div onClick={() => handlePriorityBtn()}>
-              <BrutalBtn
-                width="35px"
-                height="35px"
-                icon="PriorityHighIcon"
-                color={priorityStatus.color}
-              />
-            </div>
+            <button
+              onClick={() => handlePriorityBtn()}
+              className="retroBtn retroBtn-letter"
+              style={{ background: priorityStatus.color }}
+            >
+              <PriorityHighIcon fontSize="small" />
+            </button>
           </div>
         </>
       </div>
@@ -299,7 +321,7 @@ function CreateTask({ setTaskWindow, boardId, currentWsId }) {
         className="createTask__buttonCreate"
         onClick={() => CreateSuperTask()}
       >
-        <BrutalBtn tekst="Create" width="80px" />
+        <button className="retroBtn retroBtn-info">Create</button>
       </div>
     </motion.div>
   );

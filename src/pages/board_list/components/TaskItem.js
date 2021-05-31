@@ -5,6 +5,13 @@ import { useHistory } from "react-router-dom";
 import { db } from "../../../lib/firebase";
 import { convertDate } from "../../../functions";
 
+// Componets
+import CreatedAt from "../../../components/Modules/CreatedAt";
+import Assign from "../../../components/Modules/Assign";
+import DeadLine from "../../../components/Modules/DeadLine";
+import Status from "../../../components/Modules/Status";
+import Priority from "../../../components/Modules/Priority";
+
 //DATE STUF
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
@@ -17,6 +24,7 @@ import {
 import Grid from "@material-ui/core/Grid";
 import { Avatar } from "@material-ui/core";
 import { AnimatePresence, motion } from "framer-motion";
+import { Assignment } from "@material-ui/icons";
 
 function TaskItem({ taskName, statusName, listId }) {
   const db_Data = useSelector((state) => state.dbData);
@@ -252,7 +260,7 @@ function TaskItem({ taskName, statusName, listId }) {
   };
 
   return (
-    <div className="taskItem brutalBox">
+    <div className="taskItem retroBox">
       <div className="taskName">
         <p>
           <strong>{taskName}</strong>
@@ -265,7 +273,6 @@ function TaskItem({ taskName, statusName, listId }) {
           </div>
           <div className="moduleBox createdBy">
             <Avatar src={userPhoto} />
-            {/*  <p>{userName}</p> */}
           </div>
         </div>
       )}
@@ -274,37 +281,13 @@ function TaskItem({ taskName, statusName, listId }) {
           <div className="name">
             <p>Assign</p>
           </div>
-          <div
-            className="moduleBox assigned"
-            onClick={() => setAssingChoose(!assignChoose)}
-          >
-            <AnimatePresence>
-              {assignChoose && (
-                <>
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 10 }}
-                  >
-                    <div className="choose">
-                      <div className="layer"></div>
-                      {assingedUsers?.map((data) => {
-                        return (
-                          <div
-                            className="chooseResults"
-                            onClick={() => setNewAssign(data.userId)}
-                          >
-                            <Avatar src={data.userPhoto} />
-                            <p>{data.userName}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-            <Avatar src={assignedUserPhoto} />
-            {/* <p>{assignUserName}</p> */}
+          <div className="moduleBox">
+            <Assign
+              currentWsId={currentWsId}
+              boardId={boardId}
+              dbName={statusName}
+              listId={listId}
+            />
           </div>
         </div>
       )}
@@ -313,8 +296,8 @@ function TaskItem({ taskName, statusName, listId }) {
           <div className="name">
             <p>Date Created</p>
           </div>
-          <div className="moduleBox dateCreated ">
-            <p>{convertDate(dateCreated)}</p>
+          <div className="moduleBox">
+            <CreatedAt timestamp={dateCreated} />
           </div>
         </div>
       )}
@@ -323,33 +306,15 @@ function TaskItem({ taskName, statusName, listId }) {
           <div className="name">
             <p>Deadline</p>
           </div>
-          <div className="moduleBox deadline">
-            <div
-              className="daysLeft"
-              style={{ background: `${daysLeftColor}` }}
-            >
-              <p>{daysLeftCounter}</p>
-            </div>
-            <p>{convertDate(deadLineDate)}</p>
-            <div className="datePicker">
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                    size="small"
-                    disableToolbar
-                    variant="inline"
-                    format="dd/MM/yyyy"
-                    margin="normal"
-                    id="date-picker-inline"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                </Grid>
-              </MuiPickersUtilsProvider>
-            </div>
+          <div className="moduleBox">
+            <DeadLine
+              currentWsId={currentWsId}
+              boardId={boardId}
+              dbName={statusName}
+              listId={listId}
+              deadLine={deadLineDate}
+              dateCreated={dateCreated}
+            />
           </div>
         </div>
       )}
@@ -358,69 +323,24 @@ function TaskItem({ taskName, statusName, listId }) {
           <div className="name">
             <p>Status</p>
           </div>
-
-          <div
-            className="moduleBox status"
-            style={{ background: statusBg }}
-            onClick={() => setStatusState(!statusState)}
-          >
-            <AnimatePresence>
-              {statusState && (
-                <motion.div
-                  className="chooseStatus"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 10 }}
-                >
-                  {db_Data?.statusType?.map((data) => {
-                    return (
-                      <motion.p
-                        style={{ background: db_Data.colors[`${data}`] }}
-                        whileHover={{ scale: 1.02 }}
-                        onClick={() => changeStatus(data)}
-                      >
-                        {data}
-                      </motion.p>
-                    );
-                  })}
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <p>{statusName}</p>
+          <div className="moduleBox">
+            <Status statusName={statusName} taskId={listId} />
           </div>
         </div>
       )}
       {db_Data?.activeModules.includes("Priority") && (
-        <div className="module ">
+        <div className="module">
           <div className="name">
             <p>Priority</p>
           </div>
-          <div
-            className="moduleBox priority"
-            style={{ background: priorityBg }}
-            onClick={() => setPriorityState(!priorityState)}
-          >
-            <AnimatePresence>
-              {priorityState && (
-                <motion.div
-                  className="choosePriority"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 10 }}
-                >
-                  {db_Data?.priority?.map((data) => {
-                    return (
-                      <motion.p
-                        style={{ background: data.color }}
-                        whileHover={{ scale: 1.02 }}
-                        onClick={() => changePriority(data.name)}
-                      >
-                        {data.name}
-                      </motion.p>
-                    );
-                  })}
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <p>{priority}</p>
+          <div className="moduleBox">
+            <Priority
+              currentWsId={currentWsId}
+              boardId={boardId}
+              dbName={statusName}
+              listId={listId}
+              priority={priority}
+            />
           </div>
         </div>
       )}

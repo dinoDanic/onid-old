@@ -4,7 +4,7 @@ import { provider, auth } from "../lib/firebase";
 import { userInfo, login } from "../actions";
 import { useHistory } from "react-router-dom";
 import { db } from "../lib/firebase";
-import BrutalBtn from "../components/brutal/BrutalBtn";
+import "../styles/login.scss";
 
 function Login() {
   const dispatch = useDispatch();
@@ -65,18 +65,18 @@ function Login() {
 
   return (
     <div className="login">
-      <div className="brutalPop" style={{ flexDirection: "column" }}>
+      <div className="retroPop" style={{ flexDirection: "column" }}>
         <h3 style={{ textAlign: "center" }}>
-          onid <p>v.0.1.3</p>
+          onid <p>v.0.1.4</p>
         </h3>
-        <div className="brutalPop__box">
+        <div className=" loginBox">
           <div onClick={handleLogin}>
-            <BrutalBtn tekst="Login / Sign up with google" />
+            <button className="retroBtn retroBtn-width100">
+              Login / register with google
+            </button>
           </div>
         </div>
         <br />
-        <p>last update</p>
-        <p>24.05.21</p>
       </div>
     </div>
   );

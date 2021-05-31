@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { db, timestamp } from "../../lib/firebase";
+import { db } from "../../lib/firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { dbData } from "../../actions";
@@ -9,7 +9,7 @@ import { createNewTask } from "../../functions/";
 import Task from "./components/Task";
 
 //Drag and Drop
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 //style
 import "./styles/boardList.scss";
@@ -58,66 +58,6 @@ function BoardList() {
     ) {
       return;
     }
-
-    /*  await db
-      //GET INDEX
-      .collection("workStation")
-      .doc(currentWsId)
-      .collection("dashboard")
-      .doc(boardId)
-      .collection("task")
-      .doc("123")
-      .collection(source.droppableId)
-      .doc(taskId)
-      .get()
-      .then((data) => {
-        currentIndex = data.data().index;
-      })
-      // UPDATE INDEX
-      .then(() => {
-        db.collection("workStation")
-          .doc(currentWsId)
-          .collection("dashboard")
-          .doc(boardId)
-          .collection("task")
-          .doc("123")
-          .collection(source.droppableId)
-          .doc(taskId)
-          .update({
-            index: destination.index,
-          });
-      }); */
-    /*   // FIND TASK ID WITH LAST INDEX
-      .then(() => {
-        db.collection("workStation")
-          .doc(currentWsId)
-          .collection("dashboard")
-          .doc(boardId)
-          .collection("task")
-          .doc("123")
-          .collection(source.droppableId)
-          .where("index", "==", currentIndex)
-          .get()
-          .then((data) => {
-            data.forEach((doc) => {
-              lastIndexTask = doc.data().listId;
-            });
-          })
-          // GO TO TASK AND UPDATE INDEX
-          .then(() => {
-            db.collection("workStation")
-              .doc(currentWsId)
-              .collection("dashboard")
-              .doc(boardId)
-              .collection("task")
-              .doc("123")
-              .collection(source.droppableId)
-              .doc(lastIndexTask)
-              .update({
-                index: currentIndex + 1,
-              });
-          });
-      }); */
 
     if (source.droppableId === destination.droppableId) {
       return;
